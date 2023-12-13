@@ -89,11 +89,11 @@ for i in range(len(ang_h)):
             'flow':
                 ['BeamLoader', 'AerogridLoader',
                 'StaticCoupled',
-                # 'Modal',
-                # 'AerogridPlot',
-                # 'BeamPlot',
-                # 'LinearAssembler',
-                # 'AsymptoticStability',
+                'Modal',
+                'AerogridPlot',
+                'BeamPlot',
+                'LinearAssembler',
+                'AsymptoticStability',
                 'AeroForcesCalculator'
                 #'DynamicCoupled'
                 ],
@@ -259,71 +259,71 @@ for i in range(len(ang_h)):
         moments_a[i, j, :] = [moment_data['mx_steady_a'][0], moment_data['my_steady_a'][0], moment_data['mz_steady_a'][0]]
         moments_g[i, j, :] = [moment_data['mx_steady_G'][0], moment_data['my_steady_G'][0], moment_data['mz_steady_G'][0]]
         
-        # #Stability
-        # for file_name in os.listdir('./output/%s/stability/' % case_name):
-        #     if(fnmatch.fnmatch(file_name, '*.dat')):
-        #         velocity_analysis = np.loadtxt('./output/%s/stability/%s' % (case_name, file_name))
+        #Stability
+        for file_name in os.listdir('./output/%s/stability/' % case_name):
+            if(fnmatch.fnmatch(file_name, '*.dat')):
+                velocity_analysis = np.loadtxt('./output/%s/stability/%s' % (case_name, file_name))
 
-        # u_inf_out = velocity_analysis[:, 0]
-        # eigs_r = velocity_analysis[:, 1]
-        # eigs_i = velocity_analysis[:, 2]
+        u_inf_out = velocity_analysis[:, 0]
+        eigs_r = velocity_analysis[:, 1]
+        eigs_i = velocity_analysis[:, 2]
 
-        # n_modes = int(len(u_inf_out)/n_vel_out)
+        n_modes = int(len(u_inf_out)/n_vel_out)
 
-        # n_unst_init_f = 0
-        # n_unst_init_d = 0
+        n_unst_init_f = 0
+        n_unst_init_d = 0
 
-        # im_div_t = 1e-5
-        # skip_n_vel = 70
+        im_div_t = 1e-5
+        skip_n_vel = 70
 
-        # for k in range(n_modes):
-        #     if eigs_r[k] >= 0:
-        #         if abs(eigs_i[k]) <= im_div_t:
-        #             n_unst_init_d += 1
-        #         else:
-        #             n_unst_init_f += 1
+        for k in range(n_modes):
+            if eigs_r[k] >= 0:
+                if abs(eigs_i[k]) <= im_div_t:
+                    n_unst_init_d += 1
+                else:
+                    n_unst_init_f += 1
         
-        # #Divergence
-        # for k in range(n_vel_out):
-        #     if k < skip_n_vel:
-        #         continue
-        #     n_unst = 0
-        #     for l in range(n_modes):
-        #         if eigs_r[k*n_modes + l] >= 0 and abs(eigs_i[k*n_modes + l]) <= im_div_t:
-        #             n_unst += 1
-        #     if n_unst > n_unst_init_d:
-        #         v_div[i, j] = u_inf_out[k*n_modes + l]
-        #         break
-        # print("Divergence: ", v_div[i, j], " m/s")
+        #Divergence
+        for k in range(n_vel_out):
+            if k < skip_n_vel:
+                continue
+            n_unst = 0
+            for l in range(n_modes):
+                if eigs_r[k*n_modes + l] >= 0 and abs(eigs_i[k*n_modes + l]) <= im_div_t:
+                    n_unst += 1
+            if n_unst > n_unst_init_d:
+                v_div[i, j] = u_inf_out[k*n_modes + l]
+                break
+        print("Divergence: ", v_div[i, j], " m/s")
 
-        # #Flutter (raw)
-        # for k in range(n_vel_out):
-        #     n_unst = 0
-        #     for l in range(n_modes):
-        #         if eigs_r[k*n_modes + l] >= 0 and abs(eigs_i[k*n_modes + l]) >= im_div_t:
-        #             n_unst += 1
-        #     if n_unst > n_unst_init_f:
-        #         v_flutter[i, j] = u_inf_out[k*n_modes + l]
-        #         break
+        #Flutter (raw)
+        for k in range(n_vel_out):
+            n_unst = 0
+            for l in range(n_modes):
+                if eigs_r[k*n_modes + l] >= 0 and abs(eigs_i[k*n_modes + l]) >= im_div_t:
+                    n_unst += 1
+            if n_unst > n_unst_init_f:
+                v_flutter[i, j] = u_inf_out[k*n_modes + l]
+                break
         
-        # #Flutter (with correction for unexplained low-speed flutter conditions)
-        # for k in range(n_vel_out):
-        #     if k < skip_n_vel:
-        #         continue
-        #     n_unst = 0
-        #     for l in range(n_modes):
-        #         if eigs_r[k*n_modes + l] >= 0 and abs(eigs_i[k*n_modes + l]) >= im_div_t:
-        #             n_unst += 1
-        #     if n_unst > n_unst_init_f:
-        #         v_flutter_filt[i, j] = u_inf_out[k*n_modes + l]
-        #         break
-        # print("Flutter: ", v_flutter[i, j], " m/s")
+        #Flutter (with correction for unexplained low-speed flutter conditions)
+        for k in range(n_vel_out):
+            if k < skip_n_vel:
+                continue
+            n_unst = 0
+            for l in range(n_modes):
+                if eigs_r[k*n_modes + l] >= 0 and abs(eigs_i[k*n_modes + l]) >= im_div_t:
+                    n_unst += 1
+            if n_unst > n_unst_init_f:
+                v_flutter_filt[i, j] = u_inf_out[k*n_modes + l]
+                break
+        print("Flutter: ", v_flutter[i, j], " m/s")
 
-        # #Number of unstable modes
-        # for k in range(n_vel_out):
-        #     for l in range(n_modes):
-        #         if eigs_r[k*n_modes + l] >= 0:
-        #             unst_modes[i, j, k] += 1
+        #Number of unstable modes
+        for k in range(n_vel_out):
+            for l in range(n_modes):
+                if eigs_r[k*n_modes + l] >= 0:
+                    unst_modes[i, j, k] += 1
 
         # fig = plt.figure()
         # plt.scatter(eigs_r, eigs_i, c=u_inf_out, cmap='Blues')
@@ -339,4 +339,4 @@ for i in range(len(ang_h)):
 
 spio.savemat('case_output_forces.mat', {"moments_a": moments_a, "moments_g": moments_g, "forces_a": forces_a, "forces_g": forces_g,\
                             "n_unst_modes": unst_modes, "v_flutter": v_flutter, "v_flutter_filt": v_flutter_filt, "v_div": v_div,\
-                                  "ang_flutter": ang_flutter, "pos_flutter": pos_flutter})        #RENAMED
+                                  "ang_flutter": ang_flutter, "pos_flutter": pos_flutter})
