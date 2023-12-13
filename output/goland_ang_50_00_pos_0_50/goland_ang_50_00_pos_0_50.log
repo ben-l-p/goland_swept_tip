@@ -1,0 +1,159 @@
+--------------------------------------------------------------------------------
+            ######  ##     ##    ###    ########  ########  ##    ##
+           ##    ## ##     ##   ## ##   ##     ## ##     ##  ##  ##
+           ##       ##     ##  ##   ##  ##     ## ##     ##   ####
+            ######  ######### ##     ## ########  ########     ##
+                 ## ##     ## ######### ##   ##   ##           ##
+           ##    ## ##     ## ##     ## ##    ##  ##           ##
+            ######  ##     ## ##     ## ##     ## ##           ##
+--------------------------------------------------------------------------------
+Aeroelastics Lab, Aeronautics Department.
+    Copyright (c), Imperial College London.
+    All rights reserved.
+    License available at https://github.com/imperialcollegelondon/sharpy
+Running SHARPy from /Users/benpreston/sharpy_cases/goland_swept_loads
+SHARPy being run is in /Users/benpreston/sharpy_installs/dev_profiler
+The branch being run is develop
+The version and commit hash are: 2.1-284-g23da1e0b-23da1e0b
+SHARPy output folder set
+	/Users/benpreston/sharpy_cases/goland_swept_loads/output//goland_ang_50_00_pos_0_50/
+Generating an instance of BeamLoader
+Variable for_pos has no assigned value in the settings file.
+    will default to the value: [0.0, 0, 0]
+Generating an instance of AerogridLoader
+Variable control_surface_deflection has no assigned value in the settings file.
+    will default to the value: []
+Variable control_surface_deflection_generator_settings has no assigned value in the settings file.
+    will default to the value: {}
+Variable dx1 has no assigned value in the settings file.
+    will default to the value: -1.0
+Variable ndx1 has no assigned value in the settings file.
+    will default to the value: 1
+Variable r has no assigned value in the settings file.
+    will default to the value: 1.0
+Variable dxmax has no assigned value in the settings file.
+    will default to the value: -1.0
+The aerodynamic grid contains 2 surfaces
+  Surface 0, M=16, N=20
+     Wake 0, M=160, N=20
+  Surface 1, M=16, N=20
+     Wake 1, M=160, N=20
+  In total: 640 bound panels
+  In total: 6400 wake panels
+  Total number of panels = 7040
+Generating an instance of StaticCoupled
+Variable correct_forces_method has no assigned value in the settings file.
+    will default to the value: 
+Variable correct_forces_settings has no assigned value in the settings file.
+    will default to the value: {}
+Variable runtime_generators has no assigned value in the settings file.
+    will default to the value: {}
+Variable nonlifting_body_interactions has no assigned value in the settings file.
+    will default to the value: False
+Generating an instance of NonLinearStatic
+Variable abs_threshold has no assigned value in the settings file.
+    will default to the value: 1e-13
+Variable newmark_damp has no assigned value in the settings file.
+    will default to the value: 0.0001
+Variable gravity_dir has no assigned value in the settings file.
+    will default to the value: [0.0, 0.0, 1.0]
+Variable relaxation_factor has no assigned value in the settings file.
+    will default to the value: 0.3
+Variable dt has no assigned value in the settings file.
+    will default to the value: 0.01
+Variable num_steps has no assigned value in the settings file.
+    will default to the value: 500
+Variable initial_position has no assigned value in the settings file.
+    will default to the value: [0. 0. 0.]
+Variable initial_velocity has no assigned value in the settings file.
+    will default to the value: [0. 0. 0. 0. 0. 0.]
+Generating an instance of StaticUvlm
+Variable nonlifting_body_interactions has no assigned value in the settings file.
+    will default to the value: False
+Variable only_nonlifting has no assigned value in the settings file.
+    will default to the value: False
+Variable phantom_wing_test has no assigned value in the settings file.
+    will default to the value: False
+Variable iterative_solver has no assigned value in the settings file.
+    will default to the value: False
+Variable iterative_tol has no assigned value in the settings file.
+    will default to the value: 0.0001
+Variable iterative_precond has no assigned value in the settings file.
+    will default to the value: False
+Variable cfl1 has no assigned value in the settings file.
+    will default to the value: True
+Variable vortex_radius has no assigned value in the settings file.
+    will default to the value: 1e-06
+Variable vortex_radius_wake_ind has no assigned value in the settings file.
+    will default to the value: 1e-06
+Variable rbm_vel_g has no assigned value in the settings file.
+    will default to the value: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Variable centre_rot_g has no assigned value in the settings file.
+    will default to the value: [0.0, 0.0, 0.0]
+Variable map_forces_on_struct has no assigned value in the settings file.
+    will default to the value: False
+Variable ignore_first_x_nodes_in_force_calculation has no assigned value in the settings file.
+    will default to the value: 0
+
+
+
+|=====|=====|============|==========|==========|==========|==========|==========|==========|
+|iter |step | log10(res) |    Fx    |    Fy    |    Fz    |    Mx    |    My    |    Mz    |
+|=====|=====|============|==========|==========|==========|==========|==========|==========|
+|  0  |  0  |  0.00000   |  9.4521  |  0.0000  |-224.7615 |  0.0000  | 281.5492 |  0.0000  |
+|  1  |  0  | -10.27578  |  9.3999  |  0.0000  |-223.8103 |  0.0000  | 281.2785 | -0.0000  |
+|  0  |  1  |  0.00000   | 18.8497  |  0.0000  |-446.5970 |  0.0001  | 562.2563 | -0.0000  |
+|  1  |  1  |  -9.94043  | 18.7451  | -0.0000  |-444.7020 |  0.0000  | 561.7172 |  0.0000  |
+|  2  |  1  | -10.21120  | 18.6890  | -0.0001  |-443.6858 |  0.0000  | 561.4280 |  0.0000  |
+|  0  |  2  |  0.00000   | 28.1941  | -0.0002  |-665.5344 | -0.0000  | 842.1300 |  0.0001  |
+|  1  |  2  |  -9.73196  | 28.0368  | -0.0002  |-662.6935 |  0.0002  | 841.3222 |  0.0001  |
+|  2  |  2  | -10.00369  | 27.9525  | -0.0002  |-661.1733 |  0.0002  | 840.8900 |  0.0001  |
+|  0  |  3  |  0.00000   | 37.4859  | -0.0003  |-881.5768 |  0.0003  |1121.1712 |  0.0001  |
+|  1  |  3  |  -9.57768  | 37.2756  | -0.0004  |-877.7939 |  0.0007  |1120.0953 |  0.0002  |
+|  2  |  3  |  -9.85036  | 37.1633  | -0.0004  |-875.7740 |  0.0008  |1119.5208 |  0.0002  |
+|  3  |  3  | -11.89304  | 37.1643  | -0.0004  |-875.7923 |  0.0008  |1119.5261 |  0.0002  |
+|  0  |  4  |  0.00000   | 46.7260  | -0.0005  |-1094.7400|  0.0010  |1399.3835 |  0.0002  |
+|  1  |  4  |  -9.45350  | 46.4625  | -0.0006  |-1090.0179|  0.0016  |1398.0404 |  0.0003  |
+|  2  |  4  |  -9.72715  | 46.3222  | -0.0006  |-1087.5019|  0.0019  |1397.3248 |  0.0003  |
+|  3  |  4  | -11.67187  | 46.3238  | -0.0006  |-1087.5304|  0.0019  |1397.3329 |  0.0003  |
+|  0  |  5  |  0.00000   | 55.9153  | -0.0008  |-1305.0378|  0.0023  |1676.7709 |  0.0004  |
+|  1  |  5  |  -9.34901  | 55.5985  | -0.0009  |-1299.3813|  0.0032  |1675.1617 |  0.0004  |
+|  2  |  5  |  -9.62359  | 55.4301  | -0.0009  |-1296.3737|  0.0037  |1674.3062 |  0.0005  |
+|  3  |  5  | -11.48933  | 55.4324  | -0.0009  |-1296.4146|  0.0037  |1674.3179 |  0.0004  |
+|  0  |  6  |  0.00000   | 65.0548  | -0.0011  |-1512.4870|  0.0042  |1953.3377 |  0.0005  |
+|  1  |  6  |  -9.25821  | 64.6844  | -0.0012  |-1505.8947|  0.0056  |1951.4624 |  0.0006  |
+|  2  |  6  |  -9.53376  | 64.4879  | -0.0013  |-1502.3971|  0.0063  |1950.4675 |  0.0007  |
+|  3  |  6  | -11.33044  | 64.4910  | -0.0013  |-1502.4529|  0.0062  |1950.4835 |  0.0006  |
+|  0  |  7  |  0.00000   | 74.1453  | -0.0015  |-1717.0951|  0.0070  |2229.0864 |  0.0007  |
+|  1  |  7  |  -9.17799  | 73.7211  | -0.0016  |-1709.5756|  0.0089  |2226.9471 |  0.0009  |
+|  2  |  7  |  -9.45448  | 73.4966  | -0.0017  |-1705.5944|  0.0097  |2225.8146 |  0.0009  |
+|  3  |  7  | -11.19364  | 73.5007  | -0.0017  |-1705.6668|  0.0096  |2225.8353 |  0.0009  |
+|  0  |  8  |  0.00000   | 83.1877  | -0.0019  |-1918.8843|  0.0108  |2504.0228 |  0.0010  |
+|  1  |  8  |  -9.10584  | 82.7095  | -0.0021  |-1910.4380|  0.0131  |2501.6197 |  0.0012  |
+|  2  |  8  |  -9.38327  | 82.4569  | -0.0021  |-1905.9757|  0.0143  |2500.3502 |  0.0012  |
+|  3  |  8  | -11.07064  | 82.4621  | -0.0022  |-1906.0671|  0.0141  |2500.3764 |  0.0012  |
+|  0  |  9  |  0.00000   | 92.1829  | -0.0024  |-2117.8651|  0.0156  |2778.1498 |  0.0013  |
+|  1  |  9  |  -9.04024  | 91.6505  | -0.0026  |-2108.4948|  0.0186  |2775.4837 |  0.0015  |
+|  2  |  9  |  -9.31863  | 91.3698  | -0.0027  |-2103.5549|  0.0200  |2774.0784 |  0.0016  |
+|  3  |  9  | -10.95954  | 91.3762  | -0.0027  |-2103.6675|  0.0198  |2774.1106 |  0.0016  |
+Generating an instance of AeroForcesCalculator
+Variable text_file_name has no assigned value in the settings file.
+    will default to the value: aeroforces.txt
+Variable screen_output has no assigned value in the settings file.
+    will default to the value: True
+Variable coefficients has no assigned value in the settings file.
+    will default to the value: False
+Variable lifting_surfaces has no assigned value in the settings file.
+    will default to the value: True
+Variable nonlifting_body has no assigned value in the settings file.
+    will default to the value: False
+
+
+
+|==============|==============|==============|==============|==============|==============|==============|
+|    tstep     |     fx_g     |     fy_g     |     fz_g     |     mx_g     |     my_g     |     mz_g     |
+|==============|==============|==============|==============|==============|==============|==============|
+|      0       | 1.790423e+01 |-2.679518e-03 | 2.165437e+03 | 1.977747e-02 |-3.580905e+02 | 8.670237e-04 |
+...Finished
+FINISHED - Elapsed time = 9.3220876 seconds
+FINISHED - CPU process time = 9.4358786 seconds

@@ -1,0 +1,2 @@
+#tstep, mx_steady_G, my_steady_G, mz_steady_G, mx_unsteady_G, my_unsteady_G, mz_unsteady_G, mx_steady_a, my_steady_a, mz_steady_a, mx_unsteady_a, my_unsteady_a, mz_unsteady_a
+0, 3.330273e+01, 8.146848e+01, -2.609114e-01, 0.000000e+00, 0.000000e+00, 0.000000e+00, 3.329155e+01, 8.146848e+01, 9.014962e-01, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00

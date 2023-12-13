@@ -1,0 +1,730 @@
+         2293869 function calls (2293588 primitive calls) in 5.229 seconds
+
+   Ordered by: internal time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+       20    3.126    0.156    3.140    0.157 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/utils/uvlmlib.py:219(vlm_solver)
+       21    0.651    0.031    1.016    0.048 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/generators/straightwake.py:127(generate)
+     1302    0.287    0.000    0.546    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/models/aerogrid.py:374(generate_strip)
+   149634    0.226    0.000    0.339    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/linalg/linalg.py:2383(norm)
+       20    0.172    0.009    0.173    0.009 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/utils/xbeamlib.py:76(cbeam3_solv_nlnstatic)
+       21    0.102    0.005    0.138    0.007 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/utils/mapping.py:6(aero2struct_force_mapping)
+   149636    0.065    0.000    0.065    0.000 {method 'dot' of 'numpy.ndarray' objects}
+        3    0.044    0.015    0.044    0.015 {method 'read' of '_io.BufferedReader' objects}
+     2724    0.033    0.000    0.094    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/numeric.py:1468(cross)
+     3906    0.031    0.000    0.053    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:528(crv2rotation)
+   141120    0.029    0.000    0.040    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/generators/straightwake.py:158(get_deltax)
+    27343    0.025    0.000    0.029    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:177(skew)
+     8214    0.025    0.000    0.057    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/numeric.py:1393(moveaxis)
+    18356    0.022    0.000    0.024    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:1619(cross3)
+    16428    0.020    0.000    0.027    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/numeric.py:1330(normalize_axis_tuple)
+    65660    0.020    0.000    0.033    0.000 {built-in method numpy.zeros}
+   254386    0.017    0.000    0.017    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/multiarray.py:741(dot)
+       31    0.017    0.001    0.581    0.019 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/models/aerogrid.py:143(generate_zeta_timestep_info)
+   149816    0.016    0.000    0.021    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/linalg/linalg.py:140(isComplexType)
+   152238    0.015    0.000    0.015    0.000 {method 'ravel' of 'numpy.ndarray' objects}
+       20    0.014    0.001    0.014    0.001 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/generators/steadyvelocityfield.py:65(generate)
+     1302    0.013    0.000    0.107    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:260(angle_between_vectors_sign)
+   328873    0.013    0.000    0.013    0.000 {built-in method builtins.issubclass}
+     1302    0.011    0.000    0.014    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/function_base.py:24(linspace)
+     1302    0.011    0.000    0.019    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:608(crv2tan)
+   141185    0.011    0.000    0.011    0.000 {built-in method builtins.min}
+   149634    0.011    0.000    0.011    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/linalg/linalg.py:2379(_norm_dispatcher)
+       42    0.010    0.000    0.033    0.001 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:1110(nodal_b_for_2_a_for)
+     1344    0.010    0.000    0.014    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:675(quat2rotation)
+     7813    0.009    0.000    0.011    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/twodim_base.py:158(eye)
+        3    0.009    0.003    0.009    0.003 {built-in method posix.read}
+        3    0.008    0.003    0.008    0.003 {built-in method _posixsubprocess.fork_exec}
+     6258    0.008    0.000    0.013    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/_dtype_ctypes.py:100(dtype_from_ctypes_type)
+   159698    0.006    0.000    0.006    0.000 {built-in method numpy.asarray}
+       40    0.005    0.000    0.041    0.001 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:1152(extract_resultants)
+     8214    0.005    0.000    0.008    0.000 {method 'astype' of 'numpy.ndarray' objects}
+     2511    0.005    0.000    0.005    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:740(rotation3d_x)
+     1302    0.005    0.000    0.005    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_bsplines.py:511(_evaluate)
+        9    0.004    0.000    0.005    0.001 {built-in method io.open}
+     1302    0.004    0.000    0.011    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_bsplines.py:464(__call__)
+     1302    0.004    0.000    0.008    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/_lib/_util.py:194(_asarray_validated)
+     1608    0.004    0.000    0.004    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/numeric.py:67(zeros_like)
+     1500    0.004    0.000    0.008    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/ctypeslib.py:527(as_ctypes)
+     1302    0.003    0.000    0.027    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_polyint.py:58(__call__)
+    16428    0.003    0.000    0.004    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/numeric.py:1380(<listcomp>)
+     1302    0.003    0.000    0.003    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:800(rotation3d_z)
+     1302    0.003    0.000    0.022    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:931(crv_dot2omega)
+     6258    0.003    0.000    0.003    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/_dtype_ctypes.py:71(_from_ctypes_scalar)
+56944/56891    0.002    0.000    0.002    0.000 {built-in method builtins.len}
+     3847    0.002    0.000    0.003    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:552(__getitem__)
+     1407    0.002    0.000    0.003    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/numerictypes.py:357(issubdtype)
+     6258    0.002    0.000    0.002    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/_internal.py:920(npy_ctypes_check)
+    24621    0.002    0.000    0.002    0.000 {built-in method numpy.core._multiarray_umath.normalize_axis_index}
+     1302    0.002    0.000    0.009    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_polyint.py:89(_prepare_x)
+     1302    0.002    0.000    0.013    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_interpolate.py:740(_call_spline)
+     1343    0.001    0.000    0.016    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:808(cga)
+     8217    0.001    0.000    0.001    0.000 {built-in method builtins.sorted}
+    33377    0.001    0.000    0.001    0.000 {built-in method _operator.index}
+       58    0.001    0.000    0.004    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/group.py:348(__getitem__)
+     8214    0.001    0.000    0.001    0.000 {method 'transpose' of 'numpy.ndarray' objects}
+       21    0.001    0.000    0.003    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_bsplines.py:1138(make_interp_spline)
+     6693    0.001    0.000    0.001    0.000 {method 'reshape' of 'numpy.ndarray' objects}
+    21910    0.001    0.000    0.001    0.000 {built-in method builtins.isinstance}
+       54    0.001    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/dataset.py:636(__init__)
+     1500    0.001    0.000    0.003    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/ctypeslib.py:456(_ctype_from_dtype)
+      3/2    0.001    0.000    0.009    0.004 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/h5utils.py:38(load_h5_in_dict)
+     1500    0.001    0.000    0.002    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/ctypeslib.py:377(_ctype_from_dtype_scalar)
+       20    0.001    0.000    0.008    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:162(generate_ctypes_pointers)
+     1302    0.001    0.000    0.014    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_interpolate.py:748(_evaluate)
+     8214    0.001    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/numeric.py:1455(<listcomp>)
+     1500    0.001    0.000    0.004    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/ctypeslib.py:465(as_ctypes_type)
+        1    0.001    0.001    0.002    0.002 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:1543(_parse)
+       60    0.001    0.000    0.002    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:333(rotation2quat)
+     4110    0.001    0.000    0.001    0.000 {built-in method numpy.empty}
+     2814    0.001    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/numerictypes.py:283(issubclass_)
+       60    0.001    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/linalg/linalg.py:2191(lstsq)
+        1    0.001    0.001    5.027    5.027 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/staticcoupled.py:170(run)
+    18985    0.001    0.000    0.001    0.000 {built-in method builtins.getattr}
+       47    0.001    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/dataset.py:522(_fast_reader)
+       20    0.001    0.000    0.012    0.001 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:529(generate_ctypes_pointers)
+     3337    0.001    0.000    0.001    0.000 {built-in method numpy.array}
+       20    0.001    0.000    0.006    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:55(tangent_vector)
+     8214    0.001    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/numeric.py:1389(_moveaxis_dispatcher)
+     1500    0.001    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/ctypeslib.py:351(_ctype_ndarray)
+       60    0.001    0.000    0.002    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/polynomial.py:453(polyfit)
+      150    0.001    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:151(unit_vector)
+        1    0.001    0.001    0.001    0.001 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beam.py:353(generate_master_structure)
+        2    0.001    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/files.py:215(make_fid)
+        2    0.001    0.000    0.001    0.000 {built-in method posix.mkdir}
+        3    0.001    0.000    0.019    0.006 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:1703(_execute_child)
+       20    0.001    0.000    0.012    0.001 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beamstructures.py:93(get_triad)
+     1424    0.001    0.000    0.001    0.000 {built-in method numpy.arange}
+      180    0.001    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/polynomial.py:705(polyval)
+     1649    0.001    0.000    0.001    0.000 {method 'copy' of 'numpy.ndarray' objects}
+     3410    0.001    0.000    0.001    0.000 {built-in method numpy.asanyarray}
+       30    0.001    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/utils/xbeamlib.py:711(cbeam3_solv_disp2state)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/postproc/aeroforcescalculator.py:185(calculate_forces_for_isurf_in_g_frame)
+      680    0.000    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/_internal.py:267(data_as)
+     8217    0.000    0.000    0.000    0.000 {method 'insert' of 'list' objects}
+     1302    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_bsplines.py:515(_ensure_c_contiguous)
+      464    0.000    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:569(__setitem__)
+       20    0.000    0.000    0.004    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:128(get_polyfit)
+       89    0.000    0.000    0.002    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/settings.py:93(get_custom_type)
+     1302    0.000    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_polyint.py:95(_finish_y)
+       60    0.000    0.000    0.003    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:571(rotation2crv)
+       47    0.000    0.000    0.000    0.000 {method 'read' of 'h5py._selector.Reader' objects}
+     4500    0.000    0.000    0.000    0.000 {method 'newbyteorder' of 'numpy.dtype' objects}
+       56    0.000    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/files.py:376(__init__)
+      680    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/ctypes/__init__.py:509(cast)
+        3    0.000    0.000    0.019    0.006 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:758(__init__)
+       18    0.000    0.000    0.006    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/staticcoupled.py:163(remove_old_timestep_info)
+       20    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:233(remove_ctypes_pointers)
+      654    0.000    0.000    0.000    0.000 {method 'match' of 're.Pattern' objects}
+      680    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/_internal.py:250(__init__)
+      180    0.000    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/polynomial.py:1325(__call__)
+       20    0.000    0.000    4.122    0.206 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/staticuvlm.py:186(run)
+     5674    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+       20    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/utils/uvlmlib.py:93(set_options)
+       52    0.000    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/dataset.py:734(_fast_read_ok)
+       19    0.000    0.000    0.006    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:739(copy)
+       21    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/cout_utils.py:203(print_line)
+     1471    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/numeric.py:1855(isscalar)
+       52    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/dataset.py:625(_extent_type)
+     2724    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/numeric.py:1464(_cross_dispatcher)
+       21    0.000    0.000    0.000    0.000 {scipy.interpolate._bspl._colloc}
+   131/95    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/copy.py:128(deepcopy)
+        3    0.000    0.000    0.064    0.021 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:461(run)
+   120/60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/polynomial.py:373(polyder)
+     1373    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:3176(ndim)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/polynomial.py:1227(__init__)
+       20    0.000    0.000    0.003    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:435(__init__)
+       21    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/index_tricks.py:326(__getitem__)
+       54    0.000    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/base.py:282(file)
+       21    0.000    0.000    0.004    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_interpolate.py:490(__init__)
+     3847    0.000    0.000    0.000    0.000 {function Section.__getitem__ at 0x12734dcf0}
+     2784    0.000    0.000    0.000    0.000 {built-in method numpy.promote_types}
+        5    0.000    0.000    0.000    0.000 {method 'close' of '_io.TextIOWrapper' objects}
+      226    0.000    0.000    0.000    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+       20    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:59(__init__)
+      200    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:1849(_handle_value)
+       52    0.000    0.000    0.002    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/dataset.py:742(__getitem__)
+        9    0.000    0.000    0.002    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/settings.py:36(to_custom_types)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/files.py:571(close)
+       20    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:227(<listcomp>)
+     1613    0.000    0.000    0.000    0.000 {method 'decode' of 'bytes' objects}
+       20    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:225(<listcomp>)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/shape_base.py:612(column_stack)
+     1302    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/sparse/_base.py:1461(issparse)
+        1    0.000    0.000    0.018    0.018 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beam.py:71(generate)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:485(crv_bounds)
+      120    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/twodim_base.py:234(diag)
+     1386    0.000    0.000    0.000    0.000 {built-in method numpy.ascontiguousarray}
+       20    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/staticcoupled.py:274(convergence)
+       56    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/group.py:496(__iter__)
+     1302    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/ma/core.py:6485(isMaskedArray)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:433(quat2crv)
+     1323    0.000    0.000    0.000    0.000 {built-in method math.prod}
+       20    0.000    0.000    0.003    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:688(__init__)
+     1610    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/multiarray.py:1080(copyto)
+       88    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/posixpath.py:71(join)
+       61    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/linalg/linalg.py:159(_commonType)
+       19    0.000    0.000    0.002    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:127(create_placeholder)
+      124    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:71(_wrapreduction)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/twodim_base.py:534(vander)
+     1480    0.000    0.000    0.000    0.000 {method 'from_address' of '_ctypes.PyCArrayType' objects}
+        3    0.000    0.000    0.009    0.003 /Users/benpreston/.vscode/extensions/ms-python.python-2023.22.0/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydev_bundle/pydev_monkey.py:827(new_fork_exec)
+       20    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/utils/uvlmlib.py:210(set_flight_conditions)
+       20    0.000    0.000    0.194    0.010 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/nonlinearstatic.py:50(run)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/utils/mapping.py:90(total_forces_moments)
+       55    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/base.py:333(attrs)
+       19    0.000    0.000    0.004    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:496(create_placeholder)
+      118    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:529(_interpolate)
+        1    0.000    0.000    0.023    0.023 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/models/aerogrid.py:37(generate)
+       24    0.000    0.000    0.000    0.000 {method 'format' of 'str' objects}
+     1608    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/numeric.py:63(_zeros_like_dispatcher)
+       30    0.000    0.000    0.563    0.019 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/staticuvlm.py:246(update_step)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:1227(_close_pipe_fds)
+     1302    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/function_base.py:19(_linspace_dispatcher)
+     1608    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/multiarray.py:85(empty_like)
+     1365    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:3172(_ndim_dispatcher)
+       42    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/generators/straightwake.py:174(get_all_surface_parameters)
+       23    0.000    0.000    0.000    0.000 {built-in method posix.stat}
+      131    0.000    0.000    0.000    0.000 {method 'write' of '_io.TextIOWrapper' objects}
+   109/57    0.000    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/base.py:532(__get__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/models/grid.py:123(generate_mapping)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/files.py:111(make_fapl)
+       30    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/utils/xbeamlib.py:696(xbeam_solv_disp2state)
+       31    0.000    0.000    0.581    0.019 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/models/grid.py:117(generate_zeta)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:563(<listcomp>)
+       20    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:217(<listcomp>)
+       60    0.000    0.000    0.000    0.000 {method 'trace' of 'numpy.ndarray' objects}
+       54    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/files.py:316(mode)
+      281    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1053(_handle_fromlist)
+       40    0.000    0.000    0.041    0.001 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/nonlinearstatic.py:60(extract_resultants)
+     1337    0.000    0.000    0.000    0.000 {method 'lower' of 'str' objects}
+      130    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/cout_utils.py:83(__call__)
+       38    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/settings.py:293(notify_default_value)
+       20    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:571(<listcomp>)
+     1323    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/multiarray.py:669(result_type)
+      281    0.000    0.000    0.000    0.000 {method 'items' of 'dict' objects}
+       20    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:219(<listcomp>)
+       20    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:221(<listcomp>)
+       20    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:223(<listcomp>)
+       20    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:573(<listcomp>)
+      168    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/generators/straightwake.py:167(get_surface_parameter)
+       20    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/utils/uvlmlib.py:65(__init__)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/attrs.py:52(__getitem__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/linalg/linalg.py:492(inv)
+       20    0.000    0.000    0.004    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:656(triad2crv_vec)
+       54    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/filters.py:294(get_filters)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.all}
+       60    0.000    0.000    0.004    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/base.py:435(__iter__)
+      180    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/polynomial.py:1186(coeffs)
+        1    0.000    0.000    0.064    0.064 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/presharpy/presharpy.py:78(__init__)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:238(triad2rotation)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beam.py:394(generate_node_master_elem)
+       69    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:1791(<genexpr>)
+       60    0.000    0.000    0.004    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:519(triad2crv)
+        3    0.000    0.000    0.044    0.015 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:1110(communicate)
+       53    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/attrs.py:241(__len__)
+       40    0.000    0.000    0.031    0.001 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:1136(nodal_type_b_for_2_a_for)
+       20    0.000    0.000    0.016    0.001 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beamstructures.py:52(update)
+       20    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/utils/xbeamlib.py:51(__init__)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/group.py:34(__init__)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:2692(max)
+      102    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/shape_base.py:23(atleast_1d)
+       63    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:2322(any)
+      282    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:404(parent)
+       76    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/copy.py:227(_deepcopy_dict)
+       20    0.000    0.000    0.016    0.001 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beamstructures.py:15(__init__)
+      456    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:1748(_unquote)
+        1    0.000    0.000    0.004    0.004 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/beamloader.py:88(read_files)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/dataset.py:536(dtype)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/function_base.py:1804(trim_zeros)
+       30    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/nonlinearstatic.py:70(create_q_vector)
+       60    0.000    0.000    0.000    0.000 {method 'accumulate' of 'numpy.ufunc' objects}
+       53    0.000    0.000    0.004    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/group.py:372(get)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/.vscode/extensions/ms-python.python-2023.22.0/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydev_bundle/pydev_monkey.py:357(patch_args)
+        2    0.000    0.000    0.001    0.001 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/npyio.py:1390(savetxt)
+       20    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beamstructures.py:71(calculate_length)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/contextlib.py:496(callback)
+       42    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_bsplines.py:867(_process_deriv_spec)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:1140(argmax)
+        6    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/solver_interface.py:93(initialise_solver)
+       63    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_bsplines.py:28(_as_float_array)
+       60    0.000    0.000    0.000    0.000 {method 'sum' of 'numpy.ndarray' objects}
+       38    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/settings.py:81(get_default_value)
+        4    0.000    0.000    0.000    0.000 {built-in method builtins.eval}
+      218    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:559(_check)
+       94    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/copy.py:243(_keep_alive)
+       49    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:486(__init__)
+      120    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:1565(diagonal)
+       21    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_polyint.py:106(_reshape_yi)
+        3    0.000    0.000    0.064    0.021 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:373(check_output)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:1496(_decode)
+     11/2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:789(recurser)
+        4    0.000    0.000    0.000    0.000 {built-in method numpy.fromstring}
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/os.py:620(get_exec_path)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/contextlib.py:533(__exit__)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/gettext.py:542(find)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:426(matrix2skewvec)
+       19    0.000    0.000    0.007    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:493(copy)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/models/grid.py:73(calculate_dimensions)
+      121    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/linalg/linalg.py:135(_makearray)
+        8    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/urllib/parse.py:444(urlsplit)
+        2    0.000    0.000    0.000    0.000 {built-in method posix.getcwd}
+       63    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_bsplines.py:20(_get_dtype)
+      120    0.000    0.000    0.000    0.000 {method 'diagonal' of 'numpy.ndarray' objects}
+      270    0.000    0.000    0.000    0.000 {built-in method builtins.max}
+      570    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
+       20    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:577(<listcomp>)
+      124    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:72(<dictcomp>)
+       28    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/os.py:675(__getitem__)
+       58    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/base.py:463(items)
+        1    0.000    0.000    0.064    0.064 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/cout_utils.py:257(print_git_status)
+        1    0.000    0.000    0.000    0.000 {method 'readlines' of '_io._IOBase' objects}
+        1    0.000    0.000    0.009    0.009 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/postproc/aeroforcescalculator.py:122(calculate_forces)
+       55    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/attrs.py:47(__init__)
+       40    0.000    0.000    0.000    0.000 {method 'fill' of 'numpy.ndarray' objects}
+        6    0.000    0.000    0.000    0.000 {built-in method builtins.sum}
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1399(add_argument)
+        4    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/attrs.py:247(__iter__)
+       11    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/dataset.py:462(shape)
+      446    0.000    0.000    0.000    0.000 {method 'groups' of 're.Match' objects}
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/base.py:177(_e)
+       21    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_polyint.py:114(_set_yi)
+      455    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/base.py:307(id)
+        1    0.000    0.000    0.031    0.031 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/cout_utils.py:253(get_git_tag)
+       41    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:811(cag)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beam.py:414(generate_fortran)
+        1    0.000    0.000    0.006    0.006 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/gridloader.py:54(read_input_files)
+       20    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:581(<listcomp>)
+       20    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:575(<listcomp>)
+       10    0.000    0.000    0.006    0.001 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/staticcoupled.py:154(cleanup_timestep_info)
+       20    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:579(<listcomp>)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/shape_base.py:608(_column_stack_dispatcher)
+       20    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/datastructures.py:583(<listcomp>)
+       70    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/settings.py:21(cast)
+        1    0.000    0.000    0.064    0.064 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/cout_utils.py:62(print_welcome_message)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1317(__init__)
+       21    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_polyint.py:134(_set_dtype)
+        8    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/urllib/parse.py:379(urlparse)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:1700(trace)
+       42    0.000    0.000    0.000    0.000 {method 'any' of 'numpy.ndarray' objects}
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/contextlib.py:452(__init__)
+      246    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:1301(<genexpr>)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/queue.py:122(put)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beam.py:268(generate_dof_arrays)
+       21    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_interpolate.py:638(fill_value)
+       60    0.000    0.000    0.000    0.000 {method 'argmax' of 'numpy.ndarray' objects}
+      358    0.000    0.000    0.000    0.000 {built-in method builtins.hasattr}
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/cout_utils.py:168(print_header)
+        9    0.000    0.000    0.172    0.019 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/staticuvlm.py:238(next_step)
+      181    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/linalg/linalg.py:153(_realType)
+        1    0.000    0.000    0.002    0.002 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/postproc/aeroforcescalculator.py:236(file_output)
+        1    0.000    0.000    0.001    0.001 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/postproc/aeroforcescalculator.py:82(initialise)
+      307    0.000    0.000    0.000    0.000 {method 'startswith' of 'str' objects}
+        1    0.000    0.000    0.020    0.020 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/staticcoupled.py:102(initialise)
+     14/2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/shape_base.py:477(_block_check_depths_match)
+        6    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/gettext.py:211(_expand_lang)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:53(_wrapfunc)
+       71    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/os.py:805(fsencode)
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.__build_class__}
+       21    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_polyint.py:51(__init__)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/h5utils.py:52(load_attributes)
+       30    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/nonlinearstatic.py:67(update)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:161(__init__)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:934(fillFormat)
+        7    0.000    0.000    0.000    0.000 {built-in method h5py.h5t.py_create}
+        6    0.000    0.000    0.000    0.000 {method 'close' of '_io.BufferedReader' objects}
+       50    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:512(_initialise)
+      152    0.000    0.000    0.000    0.000 {method 'split' of 'str' objects}
+      282    0.000    0.000    0.000    0.000 {method 'rpartition' of 'str' objects}
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/.vscode/extensions/ms-python.python-2023.22.0/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydev_bundle/pydev_monkey.py:967(send_process_created_message)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/warnings.py:458(__enter__)
+       17    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/_collections_abc.py:821(get)
+        9    0.000    0.000    0.000    0.000 {built-in method posix.close}
+       20    0.000    0.000    0.001    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/utils/uvlmlib.py:206(__init__)
+      340    0.000    0.000    0.000    0.000 {built-in method _ctypes.POINTER}
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/.vscode/extensions/ms-python.python-2023.22.0/pythonFiles/lib/python/debugpy/_vendored/pydevd/pydevd.py:1922(send_process_created_message)
+      230    0.000    0.000    0.000    0.000 {built-in method _ctypes.byref}
+        9    0.000    0.000    0.175    0.019 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/staticcoupled.py:149(increase_ts)
+        6    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_datasource.py:303(_isurl)
+       20    0.000    0.000    0.020    0.001 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/staticcoupled.py:378(extract_resultants)
+      180    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/polynomial.py:1215(_coeffs)
+    38/10    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/shape_base.py:692(_block_dispatcher)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:1302(<listcomp>)
+        6    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:1927(_wait)
+        1    0.000    0.000    0.011    0.011 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/postproc/aeroforcescalculator.py:101(run)
+      118    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:303(interpolate)
+       41    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/settings.py:457(set_value_or_default)
+      292    0.000    0.000    0.000    0.000 {method '__exit__' of 'h5py._objects.FastRLock' objects}
+     18/6    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/shape_base.py:522(<genexpr>)
+        1    0.000    0.000    0.006    0.006 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:1232(_load)
+        6    0.000    0.000    0.000    0.000 {built-in method posix.pipe}
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/shape_base.py:207(_arrays_for_stack_dispatcher)
+       10    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_datasource.py:130(keys)
+        4    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_datasource.py:417(_sanitize_relative_path)
+        1    0.000    0.000    0.071    0.071 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/aerogridloader.py:108(run)
+        7    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/posixpath.py:338(normpath)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/linalg/linalg.py:197(_assert_2d)
+        4    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/selections2.py:95(select_read)
+      114    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/base.py:340(__init__)
+      105    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/posixpath.py:41(_get_sep)
+        1    0.000    0.000    0.006    0.006 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/aerogridloader.py:98(initialise)
+       21    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/linalg/blas.py:384(getter)
+        6    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/posixpath.py:150(dirname)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/getlimits.py:484(__new__)
+       61    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/linalg/linalg.py:130(get_linalg_error_extobj)
+       24    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/settings.py:278(str2bool)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/.vscode/extensions/ms-python.python-2023.22.0/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydev_bundle/pydev_monkey.py:268(is_python)
+      180    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/polynomial.py:701(_polyval_dispatcher)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_datasource.py:344(_findfile)
+        3    0.000    0.000    0.000    0.000 {built-in method posix.waitpid}
+      156    0.000    0.000    0.000    0.000 {method 'encode' of 'str' objects}
+        6    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_datasource.py:263(_iszip)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/_methods.py:47(_sum)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/shutil.py:1385(get_terminal_size)
+      379    0.000    0.000    0.000    0.000 {built-in method builtins.id}
+       28    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/os.py:755(encode)
+        6    0.000    0.000    0.000    0.000 {built-in method posix.lstat}
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/models/aerogrid.py:119(output_info)
+        6    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/posixpath.py:117(splitext)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beam.py:289(generate_mass_matrix)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.print}
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/contextlib.py:446(_create_cb_wrapper)
+        1    0.000    0.000    0.019    0.019 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/staticuvlm.py:139(initialise)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/posixpath.py:377(abspath)
+       14    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/re.py:288(_compile)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:452(_get_format_function)
+        1    0.000    0.000    0.006    0.006 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/input_arg.py:16(parse_settings)
+        9    0.000    0.000    0.003    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beam.py:373(add_timestep)
+        1    0.000    0.000    0.004    0.004 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/beamloader.py:78(initialise)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:598(_format_args)
+       55    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/base.py:212(_d)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1701(__init__)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:561(array2string)
+     14/2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/shape_base.py:673(_block)
+       21    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/index_tricks.py:415(<listcomp>)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/posixpath.py:401(_joinrealpath)
+      261    0.000    0.000    0.000    0.000 {method 'strip' of 'str' objects}
+        6    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/locale.py:396(normalize)
+        1    0.000    0.000    0.018    0.018 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/cout_utils.py:249(get_git_revision_branch)
+       10    0.000    0.000    0.004    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/models/grid.py:106(add_timestep)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/polynomial.py:1218(_coeffs)
+        1    0.000    0.000    0.000    0.000 {method 'make_selection' of 'h5py._selector.Selector' objects}
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/algebra.py:398(quat_bound)
+        9    0.000    0.000    0.003    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/nonlinearstatic.py:57(next_step)
+      251    0.000    0.000    0.000    0.000 {method 'rstrip' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beam.py:13(__init__)
+       60    0.000    0.000    0.000    0.000 {method 'squeeze' of 'numpy.ndarray' objects}
+        6    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:1204(wait)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_datasource.py:375(abspath)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:523(_array2string)
+        4    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_datasource.py:294(_possible_names)
+       21    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_bsplines.py:254(construct_fast)
+      6/2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/shape_base.py:683(<listcomp>)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:907(__init__)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/contextlib.py:514(_push_exit_callback)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/dataset.py:483(size)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/.vscode/extensions/ms-python.python-2023.22.0/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_comm.py:355(add_command)
+      120    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:1561(_diagonal_dispatcher)
+        9    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:1018(__call__)
+        9    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:753(_extendLine_pretty)
+       83    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/multiarray.py:153(concatenate)
+        9    0.000    0.000    0.003    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beam.py:380(next_step)
+        2    0.000    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_datasource.py:487(open)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/.vscode/extensions/ms-python.python-2023.22.0/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydev_bundle/pydev_monkey.py:285(remove_quotes_from_args)
+       18    0.000    0.000    0.000    0.000 {method '__deepcopy__' of 'numpy.ndarray' objects}
+       92    0.000    0.000    0.000    0.000 {method 'count' of 'str' objects}
+       37    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1370(register)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1878(_parse_known_args)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/warnings.py:165(simplefilter)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/gettext.py:583(translation)
+        4    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/posixpath.py:100(split)
+        6    0.000    0.000    0.000    0.000 {method 'append' of 'collections.deque' objects}
+       18    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/genericpath.py:16(exists)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:436(__init__)
+      120    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/twodim_base.py:230(_diag_dispatcher)
+      121    0.000    0.000    0.000    0.000 {method '__array_prepare__' of 'numpy.ndarray' objects}
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1460(_add_action)
+      120    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/polynomial.py:369(_polyder_dispatcher)
+       10    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:1892(<listcomp>)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/generators/straightwake.py:70(initialise)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/gettext.py:664(dgettext)
+        1    0.000    0.000    0.015    0.015 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/cout_utils.py:245(get_git_revision_short_hash)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/beamloader.py:65(__init__)
+       42    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/_methods.py:55(_any)
+       53    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/_collections_abc.py:865(__len__)
+       11    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:989(<genexpr>)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/encodings/__init__.py:43(normalize_encoding)
+        4    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1540(_get_optional_kwargs)
+      203    0.000    0.000    0.000    0.000 {built-in method posix.fspath}
+        4    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/selections2.py:80(__init__)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:506(wrapper)
+       13    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/re.py:249(compile)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1839(parse_known_args)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:1178(poll)
+       20    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beamstructures.py:75(add_attributes)
+       16    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/urllib/parse.py:122(_coerce_args)
+        2    0.000    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_datasource.py:155(open)
+        5    0.000    0.000    0.000    0.000 {built-in method posix.get_terminal_size}
+        3    0.000    0.000    0.000    0.000 {method 'release' of '_thread.lock' objects}
+        2    0.000    0.000    0.000    0.000 {method 'close' of 'h5py._objects.ObjectID' objects}
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beam.py:214(generate_psi)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/models/grid.py:44(generate)
+        2    0.000    0.000    0.001    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/os.py:200(makedirs)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/locale.py:362(_replace_encoding)
+      102    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/shape_base.py:19(_atleast_1d_dispatcher)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/cout_utils.py:145(__init__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/arraysetops.py:323(_unique1d)
+      139    0.000    0.000    0.000    0.000 {method 'keys' of 'dict' objects}
+       42    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_bsplines.py:856(_convert_string_aliases)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/numeric.py:274(full)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/threading.py:359(notify)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:1595(_array_str_implementation)
+        1    0.000    0.000    0.018    0.018 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/beamloader.py:133(run)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/models/grid.py:60(<genexpr>)
+        2    0.000    0.000    0.000    0.000 {built-in method time.process_time}
+       69    0.000    0.000    0.000    0.000 {method 'startswith' of 'bytes' objects}
+       58    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/_collections_abc.py:862(__init__)
+       10    0.000    0.000    0.000    0.000 {method 'findall' of 're.Pattern' objects}
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/polynomial.py:449(_polyfit_dispatcher)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:1695(_trace_dispatcher)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/h5utils.py:21(check_file_exists)
+        6    0.000    0.000    0.000    0.000 /Users/benpreston/.vscode/extensions/ms-python.python-2023.22.0/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydev_bundle/pydev_monkey.py:240(_get_str_type_compatible)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:1604(_get_handles)
+       60    0.000    0.000    0.000    0.000 {method 'replace' of 'str' objects}
+       63    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:2317(_any_dispatcher)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:827(__init__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/cout_utils.py:126(start_writer)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/postproc/aeroforcescalculator.py:221(screen_output)
+        1    0.000    0.000    0.006    0.006 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/gridloader.py:44(initialise)
+       60    0.000    0.000    0.000    0.000 {method 'upper' of 'str' objects}
+        2    0.000    0.000    0.000    0.000 {h5py.h5t.check_string_dtype}
+       18    0.000    0.000    0.000    0.000 {built-in method numpy.core._multiarray_umath.dragon4_positional}
+       56    0.000    0.000    0.000    0.000 {method 'endswith' of 'str' objects}
+        1    0.000    0.000    0.006    0.006 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:1174(__init__)
+        1    0.000    0.000    0.000    0.000 {method '__exit__' of '_io._IOBase' objects}
+       11    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:984(<genexpr>)
+       25    0.000    0.000    0.000    0.000 {method 'copy' of 'list' objects}
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_datasource.py:246(__init__)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:2553(_get_formatter)
+       66    0.000    0.000    0.000    0.000 {method 'endswith' of 'bytes' objects}
+        5    0.000    0.000    0.000    0.000 {built-in method _abc._abc_instancecheck}
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:1914(_try_wait)
+        1    0.000    0.000    0.007    0.007 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/postproc/aeroforcescalculator.py:204(map_forces_beam_dof)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/linalg/linalg.py:2187(_lstsq_dispatcher)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1627(__init__)
+        6    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/genericpath.py:121(_splitext)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:2687(_max_dispatcher)
+       58    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/base.py:165(_lapl)
+        8    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/selections2.py:91(__iter__)
+        9    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/settings.py:224(check_settings_in_options)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/warnings.py:181(_add_filter)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1649(_add_action)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:2179(_match_arguments_partial)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:780(_formatArray)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:1136(_argmax_dispatcher)
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/twodim_base.py:529(_vander_dispatcher)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/npyio.py:1518(WriteWrap)
+        6    0.000    0.000    0.000    0.000 {built-in method numpy.core._multiarray_umath.concatenate}
+       60    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/function_base.py:1800(_trim_zeros)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/files.py:596(__exit__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/models/aerogrid.py:137(calculate_dimensions)
+       10    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:714(keys)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beam.py:300(lump_masses)
+       35    0.000    0.000    0.000    0.000 {method 'find' of 'str' objects}
+       21    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_interpolate.py:378(_do_extrapolate)
+        1    0.000    0.000    0.064    0.064 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/cout_utils.py:43(initialise)
+       22    0.000    0.000    0.000    0.000 {method 'rfind' of 'str' objects}
+       35    0.000    0.000    0.000    0.000 {built-in method __new__ of type object at 0x103323040}
+       60    0.000    0.000    0.000    0.000 {built-in method builtins.abs}
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:1037(__exit__)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:64(_make_options_dict)
+       11    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:1710(_match_depth)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/arraysetops.py:138(unique)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:2027(consume_positionals)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/selections.py:112(__init__)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:1328(_initialise)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/compat.py:11(filename_encode)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/generator_interface.py:33(generator_from_string)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:1371(_handle_bom)
+        4    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/posixpath.py:60(isabs)
+        9    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:739(_extendLine)
+        6    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/solver_interface.py:69(solver_from_string)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:411(<lambda>)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/shape_base.py:703(block)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1574(_pop_action_class)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:1867(_handle_exitstatus)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/dataset.py:508(_selector)
+        4    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/genericpath.py:27(isfile)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/.vscode/extensions/ms-python.python-2023.22.0/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydev_bundle/pydev_monkey.py:37(_get_apply_arg_patching)
+      6/4    0.000    0.000    0.000    0.000 {built-in method builtins.next}
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/posixpath.py:140(basename)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:1065(__del__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/postproc/aeroforcescalculator.py:69(__init__)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:246(_cleanup)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/types.py:176(__get__)
+       20    0.000    0.000    0.000    0.000 {method 'from_address' of '_ctypes.PyCSimpleType' objects}
+        4    0.000    0.000    0.000    0.000 {method 'remove' of 'list' objects}
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/.vscode/extensions/ms-python.python-2023.22.0/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_constants.py:793(get_global_debugger)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:2431(_get_values)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:403(_get_formatdict)
+       44    0.000    0.000    0.000    0.000 {built-in method builtins.setattr}
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1812(_add_action)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1925(take_action)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/warnings.py:437(__init__)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1450(add_argument_group)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/cout_utils.py:132(finish_writer)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/shape_base.py:879(_block_setup)
+       21    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/scipy/interpolate/_interpolate.py:669(_check_and_update_bounds_error_for_extrapolation)
+       44    0.000    0.000    0.000    0.000 {method 'lstrip' of 'str' objects}
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:582(_metavar_formatter)
+        2    0.000    0.000    0.000    0.000 {method 'set_alignment' of 'h5py.h5p.PropFAID' objects}
+        1    0.000    0.000    0.006    0.006 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/input_arg.py:8(read_settings)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/abc.py:117(__instancecheck__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/generators/steadyvelocityfield.py:56(initialise)
+        6    0.000    0.000    0.000    0.000 /Users/benpreston/.vscode/extensions/ms-python.python-2023.22.0/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydev_bundle/pydev_log.py:211(debug)
+       37    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/copy.py:182(_deepcopy_atomic)
+        1    0.000    0.000    0.006    0.006 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/settings.py:260(load_config_file)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/posixpath.py:392(realpath)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/settings.py:62(get_data_type_for_several_options)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/gettext.py:741(gettext)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/models/grid.py:22(__init__)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:913(__init__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/structure/models/beam.py:320(add_lumped_mass_to_element)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/aero/models/aerogrid.py:27(__init__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/staticcoupled.py:382(teardown)
+        8    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/posixpath.py:131(splitdrive)
+        1    0.000    0.000    0.001    0.001 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/nonlinearstatic.py:42(initialise)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/selections.py:222(array_shape)
+        2    0.000    0.000    0.000    0.000 <string>:1(<lambda>)
+       13    0.000    0.000    0.000    0.000 {method 'join' of 'str' objects}
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/shape_base.py:915(_block_concatenate)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/generators/steadyvelocityfield.py:50(__init__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/selections.py:19(select)
+        9    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/configobj/__init__.py:298(__init__)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/codecs.py:186(__init__)
+       43    0.000    0.000    0.000    0.000 {method 'setdefault' of 'dict' objects}
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/warnings.py:477(__exit__)
+       11    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1374(_registry_get)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1093(__init__)
+        3    0.000    0.000    0.000    0.000 {built-in method _thread.allocate_lock}
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/queue.py:213(_put)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/contextlib.py:530(__enter__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/generators/straightwake.py:63(__init__)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1587(_check_conflict)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/attrs.py:252(iter_cb)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/type_check.py:302(iscomplexobj)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/threading.py:267(__exit__)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_datasource.py:431(exists)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1578(_get_handler)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/staticcoupled.py:85(__init__)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:203(__init__)
+        6    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/os.py:759(decode)
+       12    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_datasource.py:103(_load)
+        1    0.000    0.000    0.000    0.000 {method 'sort' of 'numpy.ndarray' objects}
+       11    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:993(<genexpr>)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_datasource.py:149(__getitem__)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_datasource.py:280(_splitzipext)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/staticuvlm.py:133(__init__)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/threading.py:264(__enter__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:971(__init__)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/cout_utils.py:114(close)
+        3    0.000    0.000    0.000    0.000 {method 'rfind' of 'bytes' objects}
+        3    0.000    0.000    0.000    0.000 {built-in method sys.exc_info}
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:2177(sum)
+       11    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:994(<genexpr>)
+       15    0.000    0.000    0.000    0.000 {method 'isalnum' of 'str' objects}
+       16    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/urllib/parse.py:111(_noop)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/aerogridloader.py:92(__init__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1112(__init__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/selections.py:133(nselect)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/cout_utils.py:119(__del__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/selections.py:227(__init__)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/contextlib.py:448(_exit_wrapper)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/threading.py:279(_is_owned)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:591(format)
+        1    0.000    0.000    0.000    0.000 {method 'flatten' of 'numpy.ndarray' objects}
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:948(__init__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:2185(<listcomp>)
+        2    0.000    0.000    0.000    0.000 {built-in method h5py.h5.get_config}
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/solvers/nonlinearstatic.py:38(__init__)
+        6    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:1879(_internal_poll)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1832(parse_args)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:72(<dictcomp>)
+        8    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/shape_base.py:553(_atleast_nd)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/attrs.py:83(<listcomp>)
+        6    0.000    0.000    0.000    0.000 {method 'partition' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1824(_get_positional_actions)
+        8    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:3218(size)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/dataset.py:631(_is_empty)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:2487(_get_value)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/base.py:506(product)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_datasource.py:256(__del__)
+        3    0.000    0.000    0.000    0.000 {method 'remove' of 'collections.deque' objects}
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/compat/py3k.py:44(asstr)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1524(_get_positional_kwargs)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/genericpath.py:39(isdir)
+        9    0.000    0.000    0.000    0.000 {method 'splitlines' of 'str' objects}
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/re.py:187(match)
+        6    0.000    0.000    0.000    0.000 {method '__exit__' of '_thread.lock' objects}
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/enum.py:801(value)
+        3    0.000    0.000    0.000    0.000 {method 'strip' of 'bytes' objects}
+        9    0.000    0.000    0.000    0.000 {method 'pop' of 'dict' objects}
+        7    0.000    0.000    0.000    0.000 {method 'add' of 'set' objects}
+        3    0.000    0.000    0.000    0.000 {method '__enter__' of '_thread.lock' objects}
+        2    0.000    0.000    0.000    0.000 {built-in method builtins.locals}
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/cout_utils.py:36(__init__)
+        3    0.000    0.000    0.000    0.000 {method 'acquire' of '_thread.lock' objects}
+        3    0.000    0.000    0.000    0.000 {method 'count' of 'list' objects}
+        3    0.000    0.000    0.000    0.000 {method 'pop' of 'collections.deque' objects}
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/dataset.py:770(<genexpr>)
+        3    0.000    0.000    0.000    0.000 {method 'index' of 'str' objects}
+        4    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/urllib/parse.py:426(_checknetloc)
+        4    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/settings.py:136(<lambda>)
+        9    0.000    0.000    0.000    0.000 {built-in method _warnings._filters_mutated}
+        5    0.000    0.000    0.000    0.000 {method 'fileno' of '_io.TextIOWrapper' objects}
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1825(<listcomp>)
+        5    0.000    0.000    0.000    0.000 /Users/benpreston/sharpy_installs/dev_profiler/sharpy/utils/solver_interface.py:65(teardown)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/linalg/linalg.py:209(_assert_stacked_square)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/_iotools.py:37(_is_string_like)
+        5    0.000    0.000    0.000    0.000 {method 'copy' of 'dict' objects}
+        6    0.000    0.000    0.000    0.000 {built-in method _stat.S_ISLNK}
+       12    0.000    0.000    0.000    0.000 {method 'isascii' of 'str' objects}
+        2    0.000    0.000    0.000    0.000 {built-in method time.perf_counter}
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:620(<listcomp>)
+        3    0.000    0.000    0.000    0.000 {built-in method sys.audit}
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/files.py:186(make_fcpl)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/selections.py:225(<genexpr>)
+       11    0.000    0.000    0.000    0.000 {built-in method builtins.callable}
+        3    0.000    0.000    0.000    0.000 {built-in method _stat.S_ISREG}
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/arrayprint.py:898(_none_or_positive_arg)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/linalg/linalg.py:203(_assert_stacked_2d)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/arraysetops.py:125(_unpack_tuple)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:2189(<listcomp>)
+        6    0.000    0.000    0.000    0.000 {method 'reverse' of 'list' objects}
+        3    0.000    0.000    0.000    0.000 {built-in method posix.waitstatus_to_exitcode}
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/.vscode/extensions/ms-python.python-2023.22.0/pythonFiles/lib/python/debugpy/_vendored/pydevd/_pydevd_bundle/pydevd_net_command_factory_json.py:421(make_process_created_message)
+        3    0.000    0.000    0.000    0.000 {built-in method posix.WIFSTOPPED}
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/type_check.py:205(_is_type_dispatcher)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/selections.py:217(mshape)
+        2    0.000    0.000    0.000    0.000 {method 'update' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:942(__call__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:2298(_get_nargs_pattern)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/npyio.py:1384(_savetxt_dispatcher)
+        3    0.000    0.000    0.000    0.000 {method 'extend' of 'list' objects}
+        2    0.000    0.000    0.000    0.000 {method 'discard' of 'set' objects}
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:2195(_parse_optional)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        1    0.000    0.000    0.000    0.000 <string>:1(<module>)
+        2    0.000    0.000    0.000    0.000 {built-in method _thread.get_ident}
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:1302(__init__)
+        2    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/files.py:592(__enter__)
+        3    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/subprocess.py:1034(__enter__)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/argparse.py:2513(_check_value)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/h5py/_hl/selections.py:123(id)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/linalg/linalg.py:488(_unary_dispatcher)
+        1    0.000    0.000    0.000    0.000 {built-in method builtins.iter}
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/core/fromnumeric.py:2172(_sum_dispatcher)
+        1    0.000    0.000    0.000    0.000 /Users/benpreston/anaconda3/envs/sharpy/lib/python3.10/site-packages/numpy/lib/arraysetops.py:133(_unique_dispatcher)
+
+
+
