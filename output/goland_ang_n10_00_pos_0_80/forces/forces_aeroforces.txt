@@ -1,2 +1,0 @@
-#tstep, fx_steady_G, fy_steady_G, fz_steady_G, fx_unsteady_G, fy_unsteady_G, fz_unsteady_G, fx_steady_a, fy_steady_a, fz_steady_a, fx_unsteady_a, fy_unsteady_a, fz_unsteady_amx_total_G, my_total_G, mz_total_Gmx_total_a, my_total_a, mz_total_a
-0, 2.232691e+01, -7.198342e-05, 2.869927e+03, 0.000000e+00, 0.000000e+00, 0.000000e+00, -7.784570e+01, -7.198342e-05, 2.868957e+03, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00, 0.000000e+00
