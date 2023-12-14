@@ -322,8 +322,8 @@ class FlyingWing():
             y1_tip = np.linspace(0, half_span-pos_h, n_tip)[1:]*np.cos(ang_h[0][0]) + y1_main[-1]
             y1 = np.concatenate([y1_main, y1_tip])
 
-            x = np.concatenate([x1, x1[-1:0:-1]])
-            y = np.concatenate([y1, -y1[-1:0:-1]])
+            x = x1
+            y = y1
         if n_surfaces == 2:
             ### Local coord for surface 00
             x1_main = np.linspace(0, 0, n_main)

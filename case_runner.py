@@ -1,44 +1,35 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import scipy.io as spio
 import os
 import sys
 import meshio
 import fnmatch
+import scipy.io as spio
 import pandas
 
-import flying_wings as wings  # See this package for the Goland wing structural and aerodynamic definition
-import sharpy.sharpy_main  # used to run SHARPy from Jupyter
+import flying_wings as wings                    #Goland wing defintion
+import sharpy.sharpy_main 
 
-ang_h = np.deg2rad(np.linspace(-50, 50, 11)) #11
-pos_frac_h = np.linspace(0.5, 0.95, 10)   #10
+import warnings
+warnings.filterwarnings("ignore")               #Disable warnings to make output more readable
 
-physical_time = 10
+### Setup parameters
+ang_h = np.deg2rad(np.linspace(-50, 50, 11))    #Tip sweep angles in degrees. Base case of (-50, 50, 11)
+pos_frac_h = np.linspace(0.5, 0.95, 10)         #Tip sweep position in fraction of chord. Base case of (0.5, 0.95, 10)
 
-u_inf = 40.
-alpha_deg = 2.  # Define antle of attack for static aeroelastic analsis.
-rho = 1.02      # Air density.
+u_inf = 40.                 # Velocity for static analysis
+alpha_deg = 2.              # Define angle of attack for static aeroelastic analsis
+rho = 1.02                  # Air density
+M = 16                      # Number of chordwise panels
+N = 20                      # Number of spanwise panels
+M_star_fact = 10            # Length of the wake in chords.
+c_ref = 1.8288              # Goland wing reference chord
+num_modes =  8              # Number of vibration modes retained in the structural model.
+n_vel_out = 500             # Number of velocities to use for stability analysis. Limits are defined in AsymptoticStability
+n_surfaces = 1              # Number of wings
+physical_time = 4          # Simulation runtime for dynamic coupled
 
-M = 16             # Number of chordwise panels
-N = 2*20             # Number of spanwise panels
-M_star_fact = 10   # Length of the  chords in chords.
-num_modes =  8     # Mumber of vibration modes retained in the structural model.
-n_vel_out = 500
-
-c_ref = 1.8288 # Goland wing reference chord. Used for reduced frequency normalisation
-rom_settings = dict()
-rom_settings['algorithm'] = 'mimo_rational_arnoldi'  # reduction algorithm
-rom_settings['r'] = 6  # Krylov subspace order
-frequency_continuous_k = np.array([0.])  # Interpolation point in the complex plane with reduced frequency units
-frequency_continuous_w = 2 * u_inf * frequency_continuous_k / c_ref
-rom_settings['frequency'] = frequency_continuous_w
-
-case_name = 'goland_cs'
-case_nlin_info = 'M%dN%dMs%d_nmodes%d' % (M, N, M_star_fact, num_modes)
-case_rom_info = 'rom_MIMORA_r%d_sig%04d_%04dj' % (rom_settings['r'], frequency_continuous_k[-1].real * 100,
-                                                  frequency_continuous_k[-1].imag * 100)
-route_test_dir = os.path.abspath('')
-
+### Output array allocation
 v_flutter = np.zeros([len(ang_h), len(pos_frac_h)])
 v_flutter_filt = np.zeros([len(ang_h), len(pos_frac_h)])
 v_div = np.zeros([len(ang_h), len(pos_frac_h)])
@@ -51,8 +42,22 @@ moments_a = np.zeros([len(ang_h), len(pos_frac_h), 3])
 forces_g = np.zeros([len(ang_h), len(pos_frac_h), 3])
 forces_a = np.zeros([len(ang_h), len(pos_frac_h), 3])
 
-for i in range(len(ang_h)):
-    for j in range(len(pos_frac_h)):
+### Universal case setup
+rom_settings = dict()
+rom_settings['algorithm'] = 'mimo_rational_arnoldi'                     # Reduction algorithm
+rom_settings['r'] = 6                                                   # Krylov subspace order
+frequency_continuous_k = np.array([0.])                                 # Interpolation point in the complex plane with reduced frequency units
+frequency_continuous_w = 2 * u_inf * frequency_continuous_k / c_ref
+rom_settings['frequency'] = frequency_continuous_w
+
+case_name = 'goland_cs'
+case_nlin_info = 'M%dN%dMs%d_nmodes%d' % (M, N, M_star_fact, num_modes)
+case_rom_info = 'rom_MIMORA_r%d_sig%04d_%04dj' % (rom_settings['r'], frequency_continuous_k[-1].real * 100,
+                                                  frequency_continuous_k[-1].imag * 100)
+route_test_dir = os.path.dirname(os.path.realpath(__file__))
+
+for i in range(len(ang_h)):                 # Loop through sweep angles
+    for j in range(len(pos_frac_h)):        # Loop through sweep positions
 
         print("\nCase ", j+i*len(pos_frac_h)+1, " of ", len(ang_h)*len(pos_frac_h))
         print("Angle: ", np.rad2deg(ang_h[i]), "\nPosition: ", pos_frac_h[j])
@@ -63,6 +68,8 @@ for i in range(len(ang_h)):
         case_name = 'goland_ang_{}_pos_{}'.format("{:.2f}".format(np.rad2deg(ang_h[i])), "{:.2f}".format(pos_frac_h[j]))
         case_name = case_name.replace('.', '_')
         case_name = case_name.replace('-', 'n')  
+        
+        ### Generate Goland wing object
         ws = wings.GolandControlSurface(M=M,
                                         N=N,
                                         Mstar_fact=M_star_fact,
@@ -74,7 +81,7 @@ for i in range(len(ang_h)):
                                         ang_h=ang_h[i],
                                         pos_frac_h=pos_frac_h[j],
                                         physical_time=physical_time,
-                                        n_surfaces=2,
+                                        n_surfaces=n_surfaces,
                                         route=route_test_dir + '/cases',
                                         case_name=case_name)
 
@@ -85,6 +92,7 @@ for i in range(len(ang_h)):
         ws.generate_aero_file()
         ws.generate_fem_file()
 
+        ### SHARPy case settings
         ws.config['SHARPy'] = {
             'flow':
                 ['BeamLoader', 'AerogridLoader',
@@ -94,13 +102,14 @@ for i in range(len(ang_h)):
                 'BeamPlot',
                 'LinearAssembler',
                 'AsymptoticStability',
+                'DynamicCoupled',
                 'AeroForcesCalculator'
-                #'DynamicCoupled'
                 ],
             'case': ws.case_name, 'route': ws.route,
-            'write_screen': 'off', 'write_log': 'on',    # Change to 'on' as neded.
+            'write_screen': 'on', 'write_log': 'on',       # Change to on to see console output
             'log_folder': route_test_dir + '/output/',
-            'log_file': ws.case_name + '.log'}
+            'log_file': ws.case_name + '.log',
+            'route': route_test_dir + '/cases/'}
 
         ws.config['BeamLoader'] = {
             'unsteady': 'off',
@@ -108,7 +117,7 @@ for i in range(len(ang_h)):
 
         ws.config['AerogridLoader'] = {
             'unsteady': 'off',
-            'aligned_grid': 'off',              #on
+            'aligned_grid': 'off',                          # Changed from original case
             'mstar': ws.Mstar_fact * ws.M,
             'freestream_dir': ws.u_inf_direction,
             'wake_shape_generator': 'StraightWake',
@@ -145,7 +154,7 @@ for i in range(len(ang_h)):
                                         'gravity_on': 'on',
                                         'gravity': 9.81}}
 
-        ws.config['DynamicCoupled'] = {'structural_solver': 'NonLinearDynamicCoupledStep',
+        ws.config['DynamicCoupled'] = {'structural_solver': 'NonLinearDynamicPrescribedStep',
                                 'structural_solver_settings': {'print_info': 'off',
                                             'max_iterations': 950,
                                             'delta_curved': 1e-1,
@@ -153,22 +162,21 @@ for i in range(len(ang_h)):
                                             'gravity_on': True,
                                             'gravity': 9.81,
                                             'num_steps': ws.n_tstep,
-                                            'dt': ws.dt,
-                                            'initial_velocity': ws.u_inf},
+                                            # 'initial_velocity': ws.u_inf,
+                                            'dt': ws.dt},
                                 'aero_solver': 'StepUvlm',
                                 'aero_solver_settings': {'print_info': 'off',
                                             'num_cores': 4,
-                                            'convection_scheme': 3,
+                                            'convection_scheme': 2,
                                             'gamma_dot_filtering': 6,
                                             'velocity_field_generator': 'GustVelocityField',
                                             'velocity_field_input': {'u_inf': u_inf,
                                                                     'u_inf_direction': [1., 0, 0],
                                                                     'gust_shape': '1-cos',
-                                                                    'gust_parameters': {'gust_length': 10,
-                                                                                        'gust_intensity': 0 * u_inf},
-                                                                    'offset': 5,
+                                                                    'gust_parameters': {'gust_length': 2,
+                                                                                        'gust_intensity': 1 * u_inf},
+                                                                    'offset': -2,
                                                                     'relative_motion': 0},
-                            'rho': rho,
                             'n_time_steps': ws.n_tstep,
                             'dt': ws.dt,
                             'cfl1': True},
@@ -241,6 +249,7 @@ for i in range(len(ang_h)):
                                         'modes_to_plot': []}
         
         ws.config['AeroForcesCalculator'] = {'write_text_file': True,
+                                             'screen_output': False,
                                              'q_ref':1/2*rho*u_inf**2,
                                              'b_ref': 2. * 6.096,
                                              'c_ref': c_ref,
@@ -248,9 +257,9 @@ for i in range(len(ang_h)):
 
         ws.config.write()
 
-        [case_data, prof_data] = sharpy.sharpy_main.main(['', ws.route + ws.case_name + '.sharpy'])
+        [case_data, prof_data] = sharpy.sharpy_main.main(['', ws.route + ws.case_name + '.sharpy'])     # Run SHARPy
 
-        #Forces and Moments
+        # Forces and Moments
         force_data = pandas.read_csv('./output/%s/forces/forces_aeroforces.txt' % case_name, delimiter=', ', index_col=False).to_dict()
         moment_data = pandas.read_csv('./output/%s/forces/moments_aeroforces.txt' % case_name, delimiter=', ', index_col=False).to_dict()
 
@@ -259,7 +268,7 @@ for i in range(len(ang_h)):
         moments_a[i, j, :] = [moment_data['mx_steady_a'][0], moment_data['my_steady_a'][0], moment_data['mz_steady_a'][0]]
         moments_g[i, j, :] = [moment_data['mx_steady_G'][0], moment_data['my_steady_G'][0], moment_data['mz_steady_G'][0]]
         
-        #Stability
+        # Stability
         for file_name in os.listdir('./output/%s/stability/' % case_name):
             if(fnmatch.fnmatch(file_name, '*.dat')):
                 velocity_analysis = np.loadtxt('./output/%s/stability/%s' % (case_name, file_name))
@@ -283,7 +292,8 @@ for i in range(len(ang_h)):
                 else:
                     n_unst_init_f += 1
         
-        #Divergence
+        # Divergence
+        # Filtered to remove instabilities occuring at low velocity due to being far from linearisation point
         for k in range(n_vel_out):
             if k < skip_n_vel:
                 continue
@@ -296,8 +306,10 @@ for i in range(len(ang_h)):
                 break
         print("Divergence: ", v_div[i, j], " m/s")
 
-        #Flutter (raw)
-        for k in range(n_vel_out):
+        # Flutter (raw)
+        # Error prone when using velocities far beyond what was linearised for
+        # This can lead to random flutter points or a very low divergence velocity
+        for k in range(n_vel_out):                                                          
             n_unst = 0
             for l in range(n_modes):
                 if eigs_r[k*n_modes + l] >= 0 and abs(eigs_i[k*n_modes + l]) >= im_div_t:
@@ -306,7 +318,8 @@ for i in range(len(ang_h)):
                 v_flutter[i, j] = u_inf_out[k*n_modes + l]
                 break
         
-        #Flutter (with correction for unexplained low-speed flutter conditions)
+        # Flutter (filtered)
+        # Ignore low velocity results. Same effect as changing the lower limit for velocity sweep
         for k in range(n_vel_out):
             if k < skip_n_vel:
                 continue
@@ -319,7 +332,8 @@ for i in range(len(ang_h)):
                 break
         print("Flutter: ", v_flutter[i, j], " m/s")
 
-        #Number of unstable modes
+        # Number of unstable modes
+        # Will include instability errors as with the raw flutter/divergence velocity
         for k in range(n_vel_out):
             for l in range(n_modes):
                 if eigs_r[k*n_modes + l] >= 0:
@@ -337,6 +351,6 @@ for i in range(len(ang_h)):
         # plt.ylabel('Imag Part, $\lambda$ [rad/s]')
         # plt.show()
 
-spio.savemat('case_output_forces.mat', {"moments_a": moments_a, "moments_g": moments_g, "forces_a": forces_a, "forces_g": forces_g,\
+spio.savemat('case_output.mat', {"moments_a": moments_a, "moments_g": moments_g, "forces_a": forces_a, "forces_g": forces_g,\
                             "n_unst_modes": unst_modes, "v_flutter": v_flutter, "v_flutter_filt": v_flutter_filt, "v_div": v_div,\
                                   "ang_flutter": ang_flutter, "pos_flutter": pos_flutter})
