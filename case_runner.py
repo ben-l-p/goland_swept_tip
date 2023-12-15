@@ -14,10 +14,10 @@ import warnings
 warnings.filterwarnings("ignore")               #Disable warnings to make output more readable
 
 ### Setup parameters
-ang_h = np.deg2rad(np.linspace(-50, 50, 11))    #Tip sweep angles in degrees. Base case of (-50, 50, 11)
-pos_frac_h = np.linspace(0.5, 0.95, 10)         #Tip sweep position in fraction of chord. Base case of (0.5, 0.95, 10)
+ang_h = np.deg2rad(np.linspace(-50, 50, 11))[:2]    #Tip sweep angles in degrees. Base case of (-50, 50, 11)
+pos_frac_h = np.linspace(0.5, 0.95, 10)[:2]         #Tip sweep position in fraction of chord. Base case of (0.5, 0.95, 10)
 
-u_inf = 40.                 # Velocity for static analysis
+u_inf = 80.                 # Velocity for static analysis
 alpha_deg = 2.              # Define angle of attack for static aeroelastic analsis
 rho = 1.02                  # Air density
 M = 16                      # Number of chordwise panels
@@ -27,7 +27,27 @@ c_ref = 1.8288              # Goland wing reference chord
 num_modes =  8              # Number of vibration modes retained in the structural model.
 n_vel_out = 500             # Number of velocities to use for stability analysis. Limits are defined in AsymptoticStability
 n_surfaces = 1              # Number of wings
-physical_time = 4          # Simulation runtime for dynamic coupled
+physical_time = 0.01          # Simulation runtime for dynamic coupled
+
+gust_intensity = 0.30
+gust_length = 1 * u_inf
+gust_offset = 0.5 * u_inf
+
+dt = 1.8288 / M / u_inf
+n_tstep = int(np.round(physical_time / dt))
+
+flow =  ['BeamLoader', 
+        'AerogridLoader',
+        'StaticCoupled',
+        # 'Modal',
+        # 'AerogridPlot',
+        # 'BeamPlot',
+        # 'AeroForcesCalculator',
+        # 'LinearAssembler',
+        # 'AsymptoticStability',
+        'DynamicCoupled',
+        'AeroForcesCalculator',
+        ]
 
 ### Output array allocation
 v_flutter = np.zeros([len(ang_h), len(pos_frac_h)])
@@ -37,10 +57,19 @@ v_max = np.zeros([len(ang_h), len(pos_frac_h)])
 ang_flutter = np.zeros([len(ang_h), len(pos_frac_h)])
 pos_flutter = np.zeros([len(ang_h), len(pos_frac_h)])
 unst_modes = np.zeros([len(ang_h), len(pos_frac_h), n_vel_out])
-moments_g = np.zeros([len(ang_h), len(pos_frac_h), 3])
-moments_a = np.zeros([len(ang_h), len(pos_frac_h), 3])
-forces_g = np.zeros([len(ang_h), len(pos_frac_h), 3])
-forces_a = np.zeros([len(ang_h), len(pos_frac_h), 3])
+
+n_force_steps = 1
+if 'DynamicCoupled' in flow:
+    n_force_steps = n_tstep
+
+moments_g_s = np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 3])
+moments_a_s = np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 3])
+forces_g_s = np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 3])  #
+forces_a_s = np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 3])  #
+moments_g_u = np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 3])
+moments_a_u = np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 3])
+forces_g_u= np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 3])   #
+forces_a_u = np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 2])  #No Z term
 
 ### Universal case setup
 rom_settings = dict()
@@ -75,7 +104,8 @@ for i in range(len(ang_h)):                 # Loop through sweep angles
                                         Mstar_fact=M_star_fact,
                                         u_inf=u_inf,
                                         alpha=alpha_deg,
-                                        cs_deflection=[0, 0],
+                                        n_control_surfaces=0,
+                                        cs_deflection=[],
                                         rho=rho,
                                         sweep=0,
                                         ang_h=ang_h[i],
@@ -94,17 +124,7 @@ for i in range(len(ang_h)):                 # Loop through sweep angles
 
         ### SHARPy case settings
         ws.config['SHARPy'] = {
-            'flow':
-                ['BeamLoader', 'AerogridLoader',
-                'StaticCoupled',
-                'Modal',
-                'AerogridPlot',
-                'BeamPlot',
-                'LinearAssembler',
-                'AsymptoticStability',
-                'DynamicCoupled',
-                'AeroForcesCalculator'
-                ],
+            'flow': flow,
             'case': ws.case_name, 'route': ws.route,
             'write_screen': 'on', 'write_log': 'on',       # Change to on to see console output
             'log_folder': route_test_dir + '/output/',
@@ -112,11 +132,11 @@ for i in range(len(ang_h)):                 # Loop through sweep angles
             'route': route_test_dir + '/cases/'}
 
         ws.config['BeamLoader'] = {
-            'unsteady': 'off',
+            'unsteady': 'on',
             'orientation': ws.quat}
 
         ws.config['AerogridLoader'] = {
-            'unsteady': 'off',
+            'unsteady': 'on',
             'aligned_grid': 'off',                          # Changed from original case
             'mstar': ws.Mstar_fact * ws.M,
             'freestream_dir': ws.u_inf_direction,
@@ -173,10 +193,10 @@ for i in range(len(ang_h)):                 # Loop through sweep angles
                                             'velocity_field_input': {'u_inf': u_inf,
                                                                     'u_inf_direction': [1., 0, 0],
                                                                     'gust_shape': '1-cos',
-                                                                    'gust_parameters': {'gust_length': 2,
-                                                                                        'gust_intensity': 1 * u_inf},
-                                                                    'offset': -2,
-                                                                    'relative_motion': 0},
+                                                                    'gust_parameters': {'gust_length': gust_length,
+                                                                                        'gust_intensity': gust_intensity * u_inf},
+                                                                    'offset': gust_offset,
+                                                                    'relative_motion': 'on'},
                             'n_time_steps': ws.n_tstep,
                             'dt': ws.dt,
                             'cfl1': True},
@@ -263,81 +283,87 @@ for i in range(len(ang_h)):                 # Loop through sweep angles
         force_data = pandas.read_csv('./output/%s/forces/forces_aeroforces.txt' % case_name, delimiter=', ', index_col=False).to_dict()
         moment_data = pandas.read_csv('./output/%s/forces/moments_aeroforces.txt' % case_name, delimiter=', ', index_col=False).to_dict()
 
-        forces_a[i, j, :] = [force_data['fx_steady_a'][0], force_data['fy_steady_a'][0], force_data['fz_steady_a'][0]]
-        forces_g[i, j, :] = [force_data['fx_steady_G'][0], force_data['fy_steady_G'][0], force_data['fz_steady_G'][0]]
-        moments_a[i, j, :] = [moment_data['mx_steady_a'][0], moment_data['my_steady_a'][0], moment_data['mz_steady_a'][0]]
-        moments_g[i, j, :] = [moment_data['mx_steady_G'][0], moment_data['my_steady_G'][0], moment_data['mz_steady_G'][0]]
+        for k in range(n_force_steps):
+            forces_a_s[i, j, k, :] = [force_data['fx_steady_a'][k], force_data['fy_steady_a'][k], force_data['fz_steady_a'][k]]
+            forces_g_s[i, j, k, :] = [force_data['fx_steady_G'][k], force_data['fy_steady_G'][k], force_data['fz_steady_G'][k]]
+            moments_a_s[i, j, k, :] = [moment_data['mx_steady_a'][k], moment_data['my_steady_a'][k], moment_data['mz_steady_a'][k]]
+            moments_g_s[i, j, k, :] = [moment_data['mx_steady_G'][k], moment_data['my_steady_G'][k], moment_data['mz_steady_G'][k]]
+            forces_a_u[i, j, k, :] = [force_data['fx_unsteady_a'][k], force_data['fy_unsteady_a'][k]]
+            forces_g_u[i, j, k, :] = [force_data['fx_unsteady_G'][k], force_data['fy_unsteady_G'][k], force_data['fz_unsteady_G'][k]]
+            moments_a_u[i, j, k, :] = [moment_data['mx_unsteady_a'][k], moment_data['my_unsteady_a'][k], moment_data['mz_unsteady_a'][k]]
+            moments_g_u[i, j, k, :] = [moment_data['mx_unsteady_G'][k], moment_data['my_unsteady_G'][k], moment_data['mz_unsteady_G'][k]]
         
         # Stability
-        for file_name in os.listdir('./output/%s/stability/' % case_name):
-            if(fnmatch.fnmatch(file_name, '*.dat')):
-                velocity_analysis = np.loadtxt('./output/%s/stability/%s' % (case_name, file_name))
+        if 'AsymptoticStability' in ws.config['SHARPy']['flow']:
+            for file_name in os.listdir('./output/%s/stability/' % case_name):
+                if(fnmatch.fnmatch(file_name, '*.dat')):
+                    velocity_analysis = np.loadtxt('./output/%s/stability/%s' % (case_name, file_name))
 
-        u_inf_out = velocity_analysis[:, 0]
-        eigs_r = velocity_analysis[:, 1]
-        eigs_i = velocity_analysis[:, 2]
+            u_inf_out = velocity_analysis[:, 0]
+            eigs_r = velocity_analysis[:, 1]
+            eigs_i = velocity_analysis[:, 2]
 
-        n_modes = int(len(u_inf_out)/n_vel_out)
+            n_modes = int(len(u_inf_out)/n_vel_out)
 
-        n_unst_init_f = 0
-        n_unst_init_d = 0
+            n_unst_init_f = 0
+            n_unst_init_d = 0
 
-        im_div_t = 1e-5
-        skip_n_vel = 70
+            im_div_t = 1e-5
+            skip_n_vel = 70
 
-        for k in range(n_modes):
-            if eigs_r[k] >= 0:
-                if abs(eigs_i[k]) <= im_div_t:
-                    n_unst_init_d += 1
-                else:
-                    n_unst_init_f += 1
-        
-        # Divergence
-        # Filtered to remove instabilities occuring at low velocity due to being far from linearisation point
-        for k in range(n_vel_out):
-            if k < skip_n_vel:
-                continue
-            n_unst = 0
-            for l in range(n_modes):
-                if eigs_r[k*n_modes + l] >= 0 and abs(eigs_i[k*n_modes + l]) <= im_div_t:
-                    n_unst += 1
-            if n_unst > n_unst_init_d:
-                v_div[i, j] = u_inf_out[k*n_modes + l]
-                break
-        print("Divergence: ", v_div[i, j], " m/s")
+            for k in range(n_modes):
+                if eigs_r[k] >= 0:
+                    if abs(eigs_i[k]) <= im_div_t:
+                        n_unst_init_d += 1
+                    else:
+                        n_unst_init_f += 1
+            
+            # Divergence
+            # Filtered to remove instabilities occuring at low velocity due to being far from linearisation point
+            for k in range(n_vel_out):
+                if k < skip_n_vel:
+                    continue
+                n_unst = 0
+                for l in range(n_modes):
+                    if eigs_r[k*n_modes + l] >= 0 and abs(eigs_i[k*n_modes + l]) <= im_div_t:
+                        n_unst += 1
+                if n_unst > n_unst_init_d:
+                    v_div[i, j] = u_inf_out[k*n_modes + l]
+                    break
+            print("Divergence: ", v_div[i, j], " m/s")
 
-        # Flutter (raw)
-        # Error prone when using velocities far beyond what was linearised for
-        # This can lead to random flutter points or a very low divergence velocity
-        for k in range(n_vel_out):                                                          
-            n_unst = 0
-            for l in range(n_modes):
-                if eigs_r[k*n_modes + l] >= 0 and abs(eigs_i[k*n_modes + l]) >= im_div_t:
-                    n_unst += 1
-            if n_unst > n_unst_init_f:
-                v_flutter[i, j] = u_inf_out[k*n_modes + l]
-                break
-        
-        # Flutter (filtered)
-        # Ignore low velocity results. Same effect as changing the lower limit for velocity sweep
-        for k in range(n_vel_out):
-            if k < skip_n_vel:
-                continue
-            n_unst = 0
-            for l in range(n_modes):
-                if eigs_r[k*n_modes + l] >= 0 and abs(eigs_i[k*n_modes + l]) >= im_div_t:
-                    n_unst += 1
-            if n_unst > n_unst_init_f:
-                v_flutter_filt[i, j] = u_inf_out[k*n_modes + l]
-                break
-        print("Flutter: ", v_flutter[i, j], " m/s")
+            # Flutter (raw)
+            # Error prone when using velocities far beyond what was linearised for
+            # This can lead to random flutter points or a very low divergence velocity
+            for k in range(n_vel_out):                                                          
+                n_unst = 0
+                for l in range(n_modes):
+                    if eigs_r[k*n_modes + l] >= 0 and abs(eigs_i[k*n_modes + l]) >= im_div_t:
+                        n_unst += 1
+                if n_unst > n_unst_init_f:
+                    v_flutter[i, j] = u_inf_out[k*n_modes + l]
+                    break
+            
+            # Flutter (filtered)
+            # Ignore low velocity results. Same effect as changing the lower limit for velocity sweep
+            for k in range(n_vel_out):
+                if k < skip_n_vel:
+                    continue
+                n_unst = 0
+                for l in range(n_modes):
+                    if eigs_r[k*n_modes + l] >= 0 and abs(eigs_i[k*n_modes + l]) >= im_div_t:
+                        n_unst += 1
+                if n_unst > n_unst_init_f:
+                    v_flutter_filt[i, j] = u_inf_out[k*n_modes + l]
+                    break
+            print("Flutter: ", v_flutter[i, j], " m/s")
 
-        # Number of unstable modes
-        # Will include instability errors as with the raw flutter/divergence velocity
-        for k in range(n_vel_out):
-            for l in range(n_modes):
-                if eigs_r[k*n_modes + l] >= 0:
-                    unst_modes[i, j, k] += 1
+            # Number of unstable modes
+            # Will include instability errors as with the raw flutter/divergence velocity
+            for k in range(n_vel_out):
+                for l in range(n_modes):
+                    if eigs_r[k*n_modes + l] >= 0:
+                        unst_modes[i, j, k] += 1
 
         # fig = plt.figure()
         # plt.scatter(eigs_r, eigs_i, c=u_inf_out, cmap='Blues')
@@ -351,6 +377,7 @@ for i in range(len(ang_h)):                 # Loop through sweep angles
         # plt.ylabel('Imag Part, $\lambda$ [rad/s]')
         # plt.show()
 
-spio.savemat('case_output.mat', {"moments_a": moments_a, "moments_g": moments_g, "forces_a": forces_a, "forces_g": forces_g,\
+spio.savemat('case_output.mat', {"moments_a_s": moments_a_s, "moments_g_s": moments_g_s, "forces_a_s": forces_a_s, "forces_g_s": forces_g_s,\
+                                 "moments_a_u": moments_a_u, "moments_g_u": moments_g_u, "forces_a_u": forces_a_u, "forces_g_u": forces_g_u,\
                             "n_unst_modes": unst_modes, "v_flutter": v_flutter, "v_flutter_filt": v_flutter_filt, "v_div": v_div,\
                                   "ang_flutter": ang_flutter, "pos_flutter": pos_flutter})
