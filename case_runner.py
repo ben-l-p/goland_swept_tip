@@ -14,8 +14,8 @@ import warnings
 warnings.filterwarnings("ignore")               #Disable warnings to make output more readable
 
 ### Setup parameters
-ang_h = np.deg2rad(np.linspace(-50, 50, 5))       #Tip sweep angles in degrees. Base case of (-50, 50, 11)
-pos_frac_h = np.linspace(0.5, 0.95, 5)           #Tip sweep position in fraction of chord. Base case of (0.5, 0.95, 10)
+ang_h = np.deg2rad(np.linspace(-50, 50, 11))       #Tip sweep angles in degrees. Base case of (-50, 50, 11)
+pos_frac_h = np.linspace(0.5, 0.95, 10)           #Tip sweep position in fraction of chord. Base case of (0.5, 0.95, 10)
 
 u_inf = 80.                 # Velocity for static analysis
 alpha_deg = 3.              # Define angle of attack for static aeroelastic analsis
@@ -31,12 +31,12 @@ asym_v_max = 250            # Maximum velocity for stability analysis (m/s)
 asym_v_num = 50             # Number of velocities to use for stability analysis
 
 
-n_surfaces = 2              # Number of wings (1 or 2)
-physical_time = 0.3         # Simulation runtime for dynamic coupled
+n_surfaces = 1              # Number of wings (1 or 2)
+physical_time = 0.6         # Simulation runtime for dynamic coupled
 
 gust_intensity = 0.5
 gust_length = 0.2 * u_inf
-gust_offset = 0.02 * u_inf
+gust_offset = 0.05 * u_inf
 
 dt = c_ref / M / u_inf
 n_tstep = int(np.round(physical_time / dt))
@@ -152,7 +152,7 @@ for i in range(n_angs):                 # Loop through sweep angles
         ws.config['SHARPy'] = {
             'flow': flow,
             'case': ws.case_name, 'route': ws.route,
-            'write_screen': 'on', 'write_log': 'on',       # Change to on to see console output
+            'write_screen': 'off', 'write_log': 'on',       # Change to on to see console output
             'log_folder': route_test_dir + '/output/',
             'log_file': ws.case_name + '.log',
             'route': route_test_dir + '/cases/'}
