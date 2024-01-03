@@ -361,8 +361,10 @@ class FlyingWing():
         ##### boundary conditions
         boundary_conditions = np.zeros((num_node_tot,), dtype=int)
         if n_surfaces == 1:
-            boundary_conditions[[0, -1]] = -1  # free-ends
-            boundary_conditions[(num_node_surf - 1) // 2] = 1  # mid-clamp
+            # boundary_conditions[[0, -1]] = -1  # free-ends
+            # boundary_conditions[(num_node_surf - 1) // 2] = 1  # mid-clamp
+            boundary_conditions[-1] = -1  # free-ends
+            boundary_conditions[0] = 1  # mid-clamp
         if n_surfaces == 2:
             boundary_conditions[0] = 1  # clamp at root (node 0)
             boundary_conditions[num_node_surf - 1] = -1  # free surf 00

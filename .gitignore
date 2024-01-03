@@ -1,0 +1,10 @@
+
+*.h5
+*.vtu
+*.dat
+*.txt
+*.log
+*.csv
+*.sharpy
+*.pyc
+case_output.mat

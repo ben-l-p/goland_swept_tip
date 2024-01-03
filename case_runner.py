@@ -14,8 +14,8 @@ import warnings
 warnings.filterwarnings("ignore")               #Disable warnings to make output more readable
 
 ### Setup parameters
-ang_h = np.deg2rad(np.linspace(-50, 50, 11))[:2]    #Tip sweep angles in degrees. Base case of (-50, 50, 11)
-pos_frac_h = np.linspace(0.5, 0.95, 10)[:2]         #Tip sweep position in fraction of chord. Base case of (0.5, 0.95, 10)
+ang_h = np.deg2rad(np.linspace(-50, 50, 11))[5]        #Tip sweep angles in degrees. Base case of (-50, 50, 11)
+pos_frac_h = np.linspace(0.5, 0.95, 10)[5]              #Tip sweep position in fraction of chord. Base case of (0.5, 0.95, 10)
 
 u_inf = 80.                 # Velocity for static analysis
 alpha_deg = 2.              # Define angle of attack for static aeroelastic analsis
@@ -27,49 +27,60 @@ c_ref = 1.8288              # Goland wing reference chord
 num_modes =  8              # Number of vibration modes retained in the structural model.
 n_vel_out = 500             # Number of velocities to use for stability analysis. Limits are defined in AsymptoticStability
 n_surfaces = 1              # Number of wings
-physical_time = 0.01          # Simulation runtime for dynamic coupled
+physical_time = 0.3            # Simulation runtime for dynamic coupled
 
-gust_intensity = 0.30
-gust_length = 1 * u_inf
-gust_offset = 0.5 * u_inf
+gust_intensity = 0.3
+gust_length = 0.2 * u_inf
+gust_offset = 0.1 * u_inf
 
-dt = 1.8288 / M / u_inf
+dt = c_ref / M / u_inf
 n_tstep = int(np.round(physical_time / dt))
 
 flow =  ['BeamLoader', 
         'AerogridLoader',
         'StaticCoupled',
-        # 'Modal',
-        # 'AerogridPlot',
-        # 'BeamPlot',
-        # 'AeroForcesCalculator',
+        'Modal',
+        'AerogridPlot',
+        'BeamPlot',
         # 'LinearAssembler',
         # 'AsymptoticStability',
         'DynamicCoupled',
         'AeroForcesCalculator',
         ]
 
+### Allows for running a single case
+try:
+    n_angs = len(ang_h)
+except:
+    n_angs = 1
+
+try:
+    n_pos_h = len(pos_frac_h)
+except:
+    n_pos_h = 1
+
 ### Output array allocation
-v_flutter = np.zeros([len(ang_h), len(pos_frac_h)])
-v_flutter_filt = np.zeros([len(ang_h), len(pos_frac_h)])
-v_div = np.zeros([len(ang_h), len(pos_frac_h)])
-v_max = np.zeros([len(ang_h), len(pos_frac_h)])
-ang_flutter = np.zeros([len(ang_h), len(pos_frac_h)])
-pos_flutter = np.zeros([len(ang_h), len(pos_frac_h)])
-unst_modes = np.zeros([len(ang_h), len(pos_frac_h), n_vel_out])
+v_flutter = np.zeros([n_angs, n_pos_h])
+v_flutter_filt = np.zeros([n_angs, n_pos_h])
+v_div = np.zeros([n_angs, n_pos_h])
+v_max = np.zeros([n_angs, n_pos_h])
+ang_flutter = np.zeros([n_angs, n_pos_h])
+pos_flutter = np.zeros([n_angs, n_pos_h])
+unst_modes = np.zeros([n_angs, n_pos_h, n_vel_out])
 
 n_force_steps = 1
 if 'DynamicCoupled' in flow:
     n_force_steps = n_tstep
 
-moments_g_s = np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 3])
-moments_a_s = np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 3])
-forces_g_s = np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 3])  #
-forces_a_s = np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 3])  #
-moments_g_u = np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 3])
-moments_a_u = np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 3])
-forces_g_u= np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 3])   #
-forces_a_u = np.zeros([len(ang_h), len(pos_frac_h), n_force_steps, 2])  #No Z term
+moments_g_s = np.zeros([n_angs, n_pos_h, n_force_steps, 3])
+moments_a_s = np.zeros([n_angs, n_pos_h, n_force_steps, 3])
+forces_g_s = np.zeros([n_angs, n_pos_h, n_force_steps, 3])
+forces_a_s = np.zeros([n_angs, n_pos_h, n_force_steps, 3])
+moments_g_u = np.zeros([n_angs, n_pos_h, n_force_steps, 3])
+moments_a_u = np.zeros([n_angs, n_pos_h, n_force_steps, 3])
+forces_g_u= np.zeros([n_angs, n_pos_h, n_force_steps, 3])
+
+forces_a_u = np.zeros([n_angs, n_pos_h, n_force_steps, 2])  #No Z term
 
 ### Universal case setup
 rom_settings = dict()
@@ -85,16 +96,26 @@ case_rom_info = 'rom_MIMORA_r%d_sig%04d_%04dj' % (rom_settings['r'], frequency_c
                                                   frequency_continuous_k[-1].imag * 100)
 route_test_dir = os.path.dirname(os.path.realpath(__file__))
 
-for i in range(len(ang_h)):                 # Loop through sweep angles
-    for j in range(len(pos_frac_h)):        # Loop through sweep positions
+for i in range(n_angs):                 # Loop through sweep angles
+    for j in range(n_pos_h):        # Loop through sweep positions
 
-        print("\nCase ", j+i*len(pos_frac_h)+1, " of ", len(ang_h)*len(pos_frac_h))
-        print("Angle: ", np.rad2deg(ang_h[i]), "\nPosition: ", pos_frac_h[j])
+        try:
+            i_ang = ang_h[i]
+        except:
+            i_ang = ang_h
 
-        ang_flutter[i, j] = ang_h[i]
-        pos_flutter[i, j] = pos_frac_h[j]
+        try:
+            j_pos_h = pos_frac_h[j]
+        except:
+            j_pos_h = pos_frac_h
 
-        case_name = 'goland_ang_{}_pos_{}'.format("{:.2f}".format(np.rad2deg(ang_h[i])), "{:.2f}".format(pos_frac_h[j]))
+        print("\nCase ", j+i*n_pos_h+1, " of ", n_angs*n_pos_h)
+        print("Angle: ", np.rad2deg(i_ang), "\nPosition: ", j_pos_h)
+
+        ang_flutter[i, j] = i_ang
+        pos_flutter[i, j] = j_pos_h
+
+        case_name = 'goland_ang_{}_pos_{}'.format("{:.2f}".format(np.rad2deg(i_ang)), "{:.2f}".format(j_pos_h))
         case_name = case_name.replace('.', '_')
         case_name = case_name.replace('-', 'n')  
         
@@ -108,8 +129,8 @@ for i in range(len(ang_h)):                 # Loop through sweep angles
                                         cs_deflection=[],
                                         rho=rho,
                                         sweep=0,
-                                        ang_h=ang_h[i],
-                                        pos_frac_h=pos_frac_h[j],
+                                        ang_h=i_ang,
+                                        pos_frac_h=j_pos_h,
                                         physical_time=physical_time,
                                         n_surfaces=n_surfaces,
                                         route=route_test_dir + '/cases',
@@ -153,11 +174,13 @@ for i in range(len(ang_h)):                 # Loop through sweep angles
             'relaxation_factor': 0.35,            #0.
             'aero_solver': 'StaticUvlm',
             'aero_solver_settings': {
+                'symmetry_condition': bool(n_surfaces % 2),
+                'symmetry_plane': 1,
                 'rho': ws.rho,
                 'print_info': 'off',
                 'horseshoe': 'off',
                 'num_cores': 4,
-                'n_rollup': 100,                #0
+                'n_rollup': 0,                #0
                 'rollup_dt': ws.dt,
                 'rollup_aic_refresh': 1,
                 'rollup_tolerance': 1e-4,
@@ -187,6 +210,8 @@ for i in range(len(ang_h)):                 # Loop through sweep angles
                                 'aero_solver': 'StepUvlm',
                                 'aero_solver_settings': {'print_info': 'off',
                                             'num_cores': 4,
+                                            'symmetry_condition': bool(n_surfaces % 2),
+                                            'symmetry_plane': 1,
                                             'convection_scheme': 2,
                                             'gamma_dot_filtering': 6,
                                             'velocity_field_generator': 'GustVelocityField',
@@ -277,7 +302,7 @@ for i in range(len(ang_h)):                 # Loop through sweep angles
 
         ws.config.write()
 
-        [case_data, prof_data] = sharpy.sharpy_main.main(['', ws.route + ws.case_name + '.sharpy'])     # Run SHARPy
+        case_data = sharpy.sharpy_main.main(['', ws.route + ws.case_name + '.sharpy'])     # Run SHARPy
 
         # Forces and Moments
         force_data = pandas.read_csv('./output/%s/forces/forces_aeroforces.txt' % case_name, delimiter=', ', index_col=False).to_dict()
