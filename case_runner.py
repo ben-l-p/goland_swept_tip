@@ -14,24 +14,29 @@ import warnings
 warnings.filterwarnings("ignore")               #Disable warnings to make output more readable
 
 ### Setup parameters
-ang_h = np.deg2rad(np.linspace(-50, 50, 11))[5]        #Tip sweep angles in degrees. Base case of (-50, 50, 11)
-pos_frac_h = np.linspace(0.5, 0.95, 10)[5]              #Tip sweep position in fraction of chord. Base case of (0.5, 0.95, 10)
+ang_h = np.deg2rad(np.linspace(-50, 50, 5))       #Tip sweep angles in degrees. Base case of (-50, 50, 11)
+pos_frac_h = np.linspace(0.5, 0.95, 5)           #Tip sweep position in fraction of chord. Base case of (0.5, 0.95, 10)
 
 u_inf = 80.                 # Velocity for static analysis
-alpha_deg = 2.              # Define angle of attack for static aeroelastic analsis
+alpha_deg = 3.              # Define angle of attack for static aeroelastic analsis
 rho = 1.02                  # Air density
 M = 16                      # Number of chordwise panels
 N = 20                      # Number of spanwise panels
 M_star_fact = 10            # Length of the wake in chords.
 c_ref = 1.8288              # Goland wing reference chord
 num_modes =  8              # Number of vibration modes retained in the structural model.
-n_vel_out = 500             # Number of velocities to use for stability analysis. Limits are defined in AsymptoticStability
-n_surfaces = 1              # Number of wings
-physical_time = 0.3            # Simulation runtime for dynamic coupled
 
-gust_intensity = 0.3
+asym_v_min = 50             # Minimum velocity for stability analysis (m/s)
+asym_v_max = 250            # Maximum velocity for stability analysis (m/s)
+asym_v_num = 50             # Number of velocities to use for stability analysis
+
+
+n_surfaces = 2              # Number of wings (1 or 2)
+physical_time = 0.3         # Simulation runtime for dynamic coupled
+
+gust_intensity = 0.5
 gust_length = 0.2 * u_inf
-gust_offset = 0.1 * u_inf
+gust_offset = 0.02 * u_inf
 
 dt = c_ref / M / u_inf
 n_tstep = int(np.round(physical_time / dt))
@@ -42,7 +47,7 @@ flow =  ['BeamLoader',
         'Modal',
         'AerogridPlot',
         'BeamPlot',
-        # 'LinearAssembler',
+        # 'LinearAssembler',        TODO fix linear assembler not working due to asymmetry
         # 'AsymptoticStability',
         'DynamicCoupled',
         'AeroForcesCalculator',
@@ -66,7 +71,7 @@ v_div = np.zeros([n_angs, n_pos_h])
 v_max = np.zeros([n_angs, n_pos_h])
 ang_flutter = np.zeros([n_angs, n_pos_h])
 pos_flutter = np.zeros([n_angs, n_pos_h])
-unst_modes = np.zeros([n_angs, n_pos_h, n_vel_out])
+unst_modes = np.zeros([n_angs, n_pos_h, asym_v_num])
 
 n_force_steps = 1
 if 'DynamicCoupled' in flow:
@@ -290,7 +295,7 @@ for i in range(n_angs):                 # Loop through sweep angles
                                             }}
 
         ws.config['AsymptoticStability'] = {'print_info': True,
-                                            'velocity_analysis': [1, 500, n_vel_out],
+                                            'velocity_analysis': [asym_v_min, asym_v_max, asym_v_num],
                                         'modes_to_plot': []}
         
         ws.config['AeroForcesCalculator'] = {'write_text_file': True,
@@ -328,7 +333,7 @@ for i in range(n_angs):                 # Loop through sweep angles
             eigs_r = velocity_analysis[:, 1]
             eigs_i = velocity_analysis[:, 2]
 
-            n_modes = int(len(u_inf_out)/n_vel_out)
+            n_modes = int(len(u_inf_out)/asym_v_num)
 
             n_unst_init_f = 0
             n_unst_init_d = 0
@@ -345,7 +350,7 @@ for i in range(n_angs):                 # Loop through sweep angles
             
             # Divergence
             # Filtered to remove instabilities occuring at low velocity due to being far from linearisation point
-            for k in range(n_vel_out):
+            for k in range(asym_v_num):
                 if k < skip_n_vel:
                     continue
                 n_unst = 0
@@ -360,7 +365,7 @@ for i in range(n_angs):                 # Loop through sweep angles
             # Flutter (raw)
             # Error prone when using velocities far beyond what was linearised for
             # This can lead to random flutter points or a very low divergence velocity
-            for k in range(n_vel_out):                                                          
+            for k in range(asym_v_num):                                                          
                 n_unst = 0
                 for l in range(n_modes):
                     if eigs_r[k*n_modes + l] >= 0 and abs(eigs_i[k*n_modes + l]) >= im_div_t:
@@ -371,7 +376,7 @@ for i in range(n_angs):                 # Loop through sweep angles
             
             # Flutter (filtered)
             # Ignore low velocity results. Same effect as changing the lower limit for velocity sweep
-            for k in range(n_vel_out):
+            for k in range(asym_v_num):
                 if k < skip_n_vel:
                     continue
                 n_unst = 0
@@ -385,7 +390,7 @@ for i in range(n_angs):                 # Loop through sweep angles
 
             # Number of unstable modes
             # Will include instability errors as with the raw flutter/divergence velocity
-            for k in range(n_vel_out):
+            for k in range(asym_v_num):
                 for l in range(n_modes):
                     if eigs_r[k*n_modes + l] >= 0:
                         unst_modes[i, j, k] += 1
@@ -405,4 +410,4 @@ for i in range(n_angs):                 # Loop through sweep angles
 spio.savemat('case_output.mat', {"moments_a_s": moments_a_s, "moments_g_s": moments_g_s, "forces_a_s": forces_a_s, "forces_g_s": forces_g_s,\
                                  "moments_a_u": moments_a_u, "moments_g_u": moments_g_u, "forces_a_u": forces_a_u, "forces_g_u": forces_g_u,\
                             "n_unst_modes": unst_modes, "v_flutter": v_flutter, "v_flutter_filt": v_flutter_filt, "v_div": v_div,\
-                                  "ang_flutter": ang_flutter, "pos_flutter": pos_flutter})
+                                  "ang_flutter": ang_flutter, "pos_flutter": pos_flutter, "dt": dt})

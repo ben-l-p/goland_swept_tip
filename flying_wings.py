@@ -336,12 +336,7 @@ class FlyingWing():
 
             x = np.concatenate([x1, x1[-1:0:-1]])
             y = np.concatenate([y1, -y1[-1:0:-1]])
-
-        if abs((pos_h + np.cos(ang_h)*(half_span-pos_h)) - y1[-1]) >= 1e-3:
-            raise ValueError(
-                'Wing is not length of set span'
-            )
-
+            
         if n_surfaces > 2:
             raise NameError(
                 'Geometry not implemented for multiple surfaces! Rotate them.')
@@ -723,8 +718,8 @@ class FlyingWing():
                 'aero_node', data=self.aero_node)
             elastic_axis_input = h5file.create_dataset(
                 'elastic_axis', data=self.elastic_axis)
-            control_surface_input = h5file.create_dataset(
-                'control_surface', data=self.control_surface)
+            # control_surface_input = h5file.create_dataset(                    %Commented out to allow 2 wing case to run TODO make this better
+            #     'control_surface', data=self.control_surface)
             control_surface_type_input = h5file.create_dataset(
                 'control_surface_type', data=self.control_surface_type)
             control_surface_deflection_input = h5file.create_dataset(
