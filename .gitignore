@@ -12,3 +12,4 @@ case_output.mat
 output/.DS_Store
 *.asv
 *.pvsm
+*.png

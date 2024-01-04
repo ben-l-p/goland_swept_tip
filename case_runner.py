@@ -1,8 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import os
-import sys
-import meshio
 import fnmatch
 import scipy.io as spio
 import pandas
@@ -14,25 +12,31 @@ import warnings
 warnings.filterwarnings("ignore")               #Disable warnings to make output more readable
 
 ### Setup parameters
-ang_h = np.deg2rad(np.linspace(-50, 50, 11))       #Tip sweep angles in degrees. Base case of (-50, 50, 11)
-pos_frac_h = np.linspace(0.5, 0.95, 10)           #Tip sweep position in fraction of chord. Base case of (0.5, 0.95, 10)
+# ang_h = np.deg2rad(np.linspace(-50, 50, 11))      # Tip sweep angles in radians. Base case of (-50, 50, 11)
+# pos_frac_h = np.linspace(0.5, 0.95, 10)           # Fraction of total straight span between root and hinge. Base case of (0.5, 0.95, 10)
+
+ang_h = np.deg2rad(33)      # Tip sweep angles in radians
+pos_frac_h = 0.69           # Fraction of total straight span between root and hinge
+n_surfaces = 2              # Number of wings (1 or 2)
 
 u_inf = 80.                 # Velocity for static analysis
 alpha_deg = 3.              # Define angle of attack for static aeroelastic analsis
 rho = 1.02                  # Air density
 M = 16                      # Number of chordwise panels
-N = 20                      # Number of spanwise panels
+N = 20*n_surfaces           # Number of spanwise panels
 M_star_fact = 10            # Length of the wake in chords.
 c_ref = 1.8288              # Goland wing reference chord
 num_modes =  8              # Number of vibration modes retained in the structural model.
 
 asym_v_min = 50             # Minimum velocity for stability analysis (m/s)
 asym_v_max = 250            # Maximum velocity for stability analysis (m/s)
-asym_v_num = 50             # Number of velocities to use for stability analysis
+asym_v_num = 101            # Number of velocities to use for stability analysis
 
+freq_min = 1e-2             # Minimum frequency for frequency analysis (rad/s (w), reduced (k))
+freq_max = 1e2              # Maximum frequency for frequency analysis (rad/s (w), reduced (k))
+freq_num = 150              # Number of frequencies to use for frequency analysis
 
-n_surfaces = 1              # Number of wings (1 or 2)
-physical_time = 0.6         # Simulation runtime for dynamic coupled
+physical_time = 0.6         # Simulation runtime for dynamic coupled (s)
 
 gust_intensity = 0.5
 gust_length = 0.2 * u_inf
@@ -47,11 +51,21 @@ flow =  ['BeamLoader',
         'Modal',
         'AerogridPlot',
         'BeamPlot',
-        # 'LinearAssembler',        TODO fix linear assembler not working due to asymmetry
-        # 'AsymptoticStability',
-        'DynamicCoupled',
+        'LinearAssembler',
+        'AsymptoticStability',
+        'FrequencyResponse',
+        # 'DynamicCoupled',
         'AeroForcesCalculator',
         ]
+
+### Prevent linearising problem if only a single wing (throws errors due to asymmetry)
+try:
+    if n_surfaces == 1:     
+        flow.remove('LinearAssembler')
+        flow.remove('AsyptoticStability')
+        flow.remove('FrequencyResponse')
+except: 
+    pass
 
 ### Allows for running a single case
 try:
@@ -298,12 +312,15 @@ for i in range(n_angs):                 # Loop through sweep angles
                                             'velocity_analysis': [asym_v_min, asym_v_max, asym_v_num],
                                         'modes_to_plot': []}
         
+        ws.config['FrequencyResponse'] = {'quick_plot': True,       # Saves a plot as an image for every input/output combination
+                                          'frequency_unit': 'w',
+                                          'num_freqs': freq_num,
+                                          'frequency_bounds': [freq_min, freq_max],
+                                          'frequency_spacing': 'log',
+                                          }
+        
         ws.config['AeroForcesCalculator'] = {'write_text_file': True,
-                                             'screen_output': False,
-                                             'q_ref':1/2*rho*u_inf**2,
-                                             'b_ref': 2. * 6.096,
-                                             'c_ref': c_ref,
-                                             'S_ref': c_ref*2. * 6.096}
+                                             'screen_output': False}
 
         ws.config.write()
 
