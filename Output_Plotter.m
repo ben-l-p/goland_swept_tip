@@ -16,11 +16,14 @@ moments_tot = moments_g_u + moments_g_s + moments_a_u + moments_a_s;
 max_moms = squeeze(max(moments_tot, [], 3));
 min_moms = squeeze(min(moments_tot, [], 3));
 abs_max_moms = squeeze(max(abs(moments_tot), [], 3));
+signed_max_moms = (abs(min_moms)>abs(max_moms))...
+    .*min_moms+(abs(min_moms)<abs(max_moms)).*max_moms;
 
-norm_abs_max_moms = zeros(size(abs_max_moms));
+
+norm_abs_max_moms = zeros(size(signed_max_moms));
 for i = 1:3
-    norm_abs_max_moms(:, :, i) = abs_max_moms(:, :, i)...
-        ./abs_max_moms(straight_index, end, i);
+    norm_abs_max_moms(:, :, i) = signed_max_moms(:, :, i)...
+        ./signed_max_moms(straight_index, end, i);
 end
 
 
@@ -30,13 +33,18 @@ mom_titles = ["Out-of-Plane", "Twisting", "Yawing"];
 
 for i = 1:3
     subplot(2, 3, i);
-    hold on;
+    hold on
     title(mom_titles(i));
     for j = 1:length(ang_Y)
         for k = 1:length(pos_X)
-            plot((1:n_tstep).*dt, squeeze(moments_tot(j, k, :, i)));
+            if j ~= straight_index && k ~= length(pos_X)
+                plot((1:n_tstep).*dt, squeeze(moments_tot(j, k, :, i)), 'k-');
+            end
         end
     end
+    
+    plot((1:n_tstep).*dt, squeeze(moments_tot(straight_index, length(pos_X), :, i)), 'r-', LineWidth=5);
+
     xlabel("Time (s)");
     ylabel("Applied Moment (Nm)")
     hold off;
@@ -49,24 +57,30 @@ for i = 1:3
     title(mom_titles(i));
     xlabel("Fraction of Span to Kink");
     ylabel("Sweep Angle (deg)");
-    zlabel("Normalised Moment");
+    zlabel("Normalised Maximum Moment");
     c = colorbar;
-    c.Label.String = 'Maximum Moment (Nm)';
+    c.Label.String = 'Normalised Maximum Moment';
     shading interp;
     axis([min(pos_X), max(pos_X), min(ang_Y), max(ang_Y)]);
-    clim([])
     hold off;
 end
 
-forces_a_u_padded = cat(4, forces_a_u, zeros(length(pos_X), length(ang_Y), n_tstep, 1));
+forces_a_u_padded = cat(4, forces_a_u, zeros(length(ang_Y), length(pos_X), n_tstep, 1));
 forces_tot = forces_a_s + forces_g_s + forces_g_u + forces_a_u_padded;
 forces_steady = squeeze(forces_tot(:, :, 1, :));
 norm_forces_steady = zeros(size(forces_steady));
 
+max_forces = squeeze(max(forces_tot, [], 3));
+min_forces = squeeze(min(forces_tot, [], 3));
+abs_max_forces = squeeze(max(abs(forces_tot), [], 3));
+signed_max_forces = (abs(min_forces)>abs(max_forces))...
+    .*min_forces+(abs(min_forces)<abs(max_forces)).*max_forces;
+
+max_over_steady_forces = signed_max_forces./forces_steady;
+
 for i = 1:3
     norm_forces_steady(:, :, i) = forces_steady(:, :, i)./forces_steady(straight_index, end, i);
 end
-
 
 figure();
 sgtitle("Applied Forces during Gust Response");
@@ -78,9 +92,14 @@ for i = 1:3
     title(force_titles(i));
     for j = 1:length(ang_Y)
         for k = 1:length(pos_X)
-            plot((1:n_tstep).*dt, squeeze(forces_tot(j, k, :, i)));
+            if j ~= straight_index && k ~= length(pos_X)
+                plot((1:n_tstep).*dt, squeeze(forces_tot(j, k, :, i)), 'k-');
+            end
         end
     end
+
+    plot((1:n_tstep).*dt, squeeze(forces_tot(straight_index, length(pos_X), :, i)), 'r-', LineWidth=5);
+
     xlabel("Time (s)");
     ylabel("Applied Force (N)")
     hold off;
@@ -109,23 +128,38 @@ for i = 1:3
     norm_m_o_l(:, :, i) = m_o_l(:, :, i)./m_o_l(straight_index, end, i);
 end
 
+% figure()
+% for i = 1:3
+%     subplot(1, 3, i);
+%     hold on;
+%     surf(pos_X, ang_Y, max_over_steady_forces(:, :, i));
+%     title(force_titles(i));
+%     xlabel("Fraction of Span to Kink");
+%     ylabel("Sweep Angle (deg)");
+%     zlabel("Maximum to Steady Force Ratio");
+%     c = colorbar;
+%     c.Label.String = 'Maximum to Steady Force Ratio';
+%     shading interp;
+%     axis([min(pos_X), max(pos_X), min(ang_Y), max(ang_Y)]);
+%     hold off;
+% end
 
-figure();
-sgtitle("Normalised Moment to Lift Ratio");
-for i = 1:3
-    subplot(1, 3, i);
-    hold on;
-    surf(pos_X, ang_Y, norm_m_o_l(:, :, i));
-    title(mom_titles(i));
-    xlabel("Fraction of Span to Kink");
-    ylabel("Sweep Angle (deg)");
-    zlabel("Moment to Lift Ratio");
-    c = colorbar;
-    c.Label.String = 'Moment to Lift Ratio';
-    shading interp;
-    axis([min(pos_X), max(pos_X), min(ang_Y), max(ang_Y)]);
-    hold off;
-end
+% figure();
+% sgtitle("Normalised Moment to Lift Ratio");
+% for i = 1:3
+%     subplot(1, 3, i);
+%     hold on;
+%     surf(pos_X, ang_Y, norm_m_o_l(:, :, i));
+%     title(mom_titles(i));
+%     xlabel("Fraction of Span to Kink");
+%     ylabel("Sweep Angle (deg)");
+%     zlabel("Moment to Lift Ratio");
+%     c = colorbar;
+%     c.Label.String = 'Moment to Lift Ratio';
+%     shading interp;
+%     axis([min(pos_X), max(pos_X), min(ang_Y), max(ang_Y)]);
+%     hold off;
+% end
 
 %% Stability
 %Set divergence and flutter velocities to be infinite when they did not

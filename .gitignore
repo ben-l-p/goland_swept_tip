@@ -10,3 +10,5 @@
 case_output.mat
 *.mat
 output/.DS_Store
+*.asv
+*.pvsm

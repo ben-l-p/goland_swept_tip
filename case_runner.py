@@ -152,7 +152,7 @@ for i in range(n_angs):                 # Loop through sweep angles
         ws.config['SHARPy'] = {
             'flow': flow,
             'case': ws.case_name, 'route': ws.route,
-            'write_screen': 'off', 'write_log': 'on',       # Change to on to see console output
+            'write_screen': 'on', 'write_log': 'on',       # Change to on to see console output
             'log_folder': route_test_dir + '/output/',
             'log_file': ws.case_name + '.log',
             'route': route_test_dir + '/cases/'}
