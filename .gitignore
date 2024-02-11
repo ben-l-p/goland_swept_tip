@@ -1,0 +1,10 @@
+
+*.pyc
+*.h5
+*.vtu
+*.dat
+*.txt
+*.log
+*.csv
+*.sharpy
+*.mat
