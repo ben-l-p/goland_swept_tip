@@ -55,7 +55,6 @@ class swept_tip_goland:
         self.beta = kwargs.get('beta', 0.0)
         self.yaw = kwargs.get('yaw', 0.0)
         self.roll = kwargs.get('roll', 0.0)
-        self.Mstar_fact = kwargs.get('Mstar_fact', 10)
         self.rho = kwargs.get('rho', 1.225)
         self.c_ref = kwargs.get('c_ref', 1.8288)
         self.b_ref = kwargs.get('b_ref', 6.096)
@@ -88,6 +87,22 @@ class swept_tip_goland:
         self.asym_v_min = kwargs.get('asym_v_min', 50)
         self.asym_v_max = kwargs.get('asym_v_max', 249)
         self.asym_v_num = kwargs.get('asym_v_num', 200)
+
+        self.quat = algebra.euler2quat(np.array([self.roll, self.alpha, self.yaw]))
+        self.u_inf_direction = np.array([np.cos(self.beta), np.sin(self.beta), 0.])
+        self.dt = self.c_ref / self.M / self.u_inf
+        self.n_tstep = int(np.round(self.physical_time / self.dt))
+
+        self.wake_cfl1 = kwargs.get('wake_cfl1', True)
+        self.wake_dx1 = kwargs.get('wake_dx1', self.dt*self.u_inf)
+        self.wake_ndx1 = kwargs.get('wake_ndx1', 20)
+        self.wake_r = kwargs.get('wake_r', 1.1)
+        self.wake_dxmax = kwargs.get('wake_dxmax', 30*self.wake_dx1)
+
+        if self.wake_cfl1:
+            self.Mstar_fact = kwargs.get('Mstar_fact', 10)
+        else:
+            self.Mstar_fact = kwargs.get('Mstar_fact', 4)
 
         # Correct flow depending on number of wings
         if self.n_surf == 1:     
@@ -522,11 +537,6 @@ class swept_tip_goland:
             os.remove(rom_file)
 
     def _generate_settings(self):
-        self.quat = algebra.euler2quat(np.array([self.roll, self.alpha, self.yaw]))
-        self.u_inf_direction = np.array([np.cos(self.beta), np.sin(self.beta), 0.])
-        self.dt = self.c_ref / self.M / self.u_inf
-        self.n_tstep = int(np.round(self.physical_time / self.dt))
-
         settings = dict()
         settings['SHARPy'] = {
                 'flow': self.flow,
@@ -551,6 +561,12 @@ class swept_tip_goland:
             'wake_shape_generator_input': {'u_inf': self.u_inf,
                                             'u_inf_direction': self.u_inf_direction,
                                             'dt': self.dt}}
+        if not self.wake_cfl1:
+            settings['AerogridLoader']['wake_shape_generator_input'].update({
+                                            'dx1': self.wake_dx1,
+                                            'ndx1': self.wake_ndx1,
+                                            'r': self.wake_r,
+                                            'dxmax': self.wake_dxmax})
         
         settings['StaticCoupled'] = {
                 'print_info': 'on',
@@ -599,6 +615,9 @@ class swept_tip_goland:
                                                 'symmetry_plane': 1,
                                                 'convection_scheme': 2,
                                                 'gamma_dot_filtering': 6,
+                                                'n_time_steps': self.n_tstep,
+                                                'dt': self.dt,
+                                                'cfl1': self.wake_cfl1,
                                                 'velocity_field_generator': 'GustVelocityField',
                                                 'velocity_field_input': {'u_inf': self.u_inf,
                                                                         'u_inf_direction': [1., 0, 0],
@@ -606,10 +625,7 @@ class swept_tip_goland:
                                                                         'gust_parameters': {'gust_length': self.gust_length,
                                                                                             'gust_intensity': self.gust_intensity * self.u_inf},
                                                                         'offset': self.gust_offset,
-                                                                        'relative_motion': 'on'},
-                                'n_time_steps': self.n_tstep,
-                                'dt': self.dt,
-                                'cfl1': True},
+                                                                        'relative_motion': 'on'}},
                                     'fsi_substeps': 200,
                                     'minimum_steps': 1,
                                     'relaxation_steps': 150,
@@ -672,7 +688,7 @@ class swept_tip_goland:
                                                                 'density': self.rho,
                                                                 'remove_predictor': 'on',
                                                                 'use_sparse': 'on',
-                                                                'remove_inputs': ['u_gust'],
+                                                                # 'remove_inputs': ['u_gust'],
                                                                 'rom_method': ['Krylov'],
                                                                 'rom_method_settings': {'Krylov': {'r': self.krylov_r,
                                                                                                    'algorithm': self.krylov_alg,

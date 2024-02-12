@@ -8,3 +8,4 @@
 *.csv
 *.sharpy
 *.mat
+.DS_Store
