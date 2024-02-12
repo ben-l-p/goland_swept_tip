@@ -35,7 +35,7 @@ flow =  ['BeamLoader',
 
 ### Loop this code, varying parameters each run
 case_name = 'test_case'
-wing = swept_tip_goland(case_name, flow, np.deg2rad(45), 0.5, 2, 1)
+wing = swept_tip_goland(case_name, flow)
 case_data = sharpy.sharpy_main.main(['', wing.route + wing.case_name + '.sharpy'])
 case_output.update({wing.case_name: case_data_extract(wing, case_data)})
 ### End of loop

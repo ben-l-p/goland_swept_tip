@@ -39,17 +39,20 @@ class swept_tip_goland:
         self.write_screen = kwargs.get('write_screen', 'on')
 
         # Load keyword parameters
-        self.ang_h = kwargs.get('ang_h', np.deg2rad(0))     # Angle of the wing kink/hinge in rad. Positive is swept back
+        self.ang_h = kwargs.get('ang_h', 0.0)               # Angle of the wing kink/hinge in rad. Positive is swept back
         self.pos_frac_h = kwargs.get('pos_frac_h', 0.7)     # Fraction of the span from the root to the kink
         self.n_surf = kwargs.get('n_surf', 2)               # Number of surfaces (1 or 2)
         self.disc_mode = kwargs.get('disc_mode', 1)         # Type of discretisation (see above)
         self.M = kwargs.get('M', 16)                        # Number of chordwise panels
         self.N = kwargs.get('N', 40)*self.n_surf            # Number of spanwise panels (input is per wing)
         self.u_inf = kwargs.get('u_inf', 60)                # Velocity (m/s)
+        self.sym = kwargs.get('sym', True)                  # Use UVLM symmetry condition (auto disabled for two wings)
         self.alpha = kwargs.get('alpha', np.deg2rad(3.0))
         self.beta = kwargs.get('beta', 0.0)
         self.yaw = kwargs.get('yaw', 0.0)
         self.roll = kwargs.get('roll', 0.0)
+        self.sweep = kwargs.get('sweep', 0.0)
+        self.ang_panel = kwargs.get('ang_panel', 0.0)
         self.rho = kwargs.get('rho', 1.225)
         self.c_ref = kwargs.get('c_ref', 1.8288)
         self.b_ref = kwargs.get('b_ref', 6.096)
@@ -94,7 +97,7 @@ class swept_tip_goland:
         if self.wake_cfl1:
             self.Mstar_fact = kwargs.get('Mstar_fact', 10)
         else:
-            self.Mstar_fact = kwargs.get('Mstar_fact', 4)
+            self.Mstar_fact = kwargs.get('Mstar_fact', 3)
 
         # Correct flow depending on number of wings
         if self.n_surf == 1:     
@@ -111,6 +114,7 @@ class swept_tip_goland:
 
         # Calculate other case parameters required in case settings
         self.quat = algebra.euler2quat(np.array([self.roll, self.alpha, self.yaw]))
+        self.panel_direction = np.array([np.cos(self.ang_panel), np.sin(self.ang_panel), 0])
         self.u_inf_direction = np.array([np.cos(self.beta), np.sin(self.beta), 0.])
         self.n_tstep = int(np.round(self.physical_time / self.dt))
 
@@ -126,6 +130,7 @@ class swept_tip_goland:
         # Generate data required for simulation
         self._generate_beam_coords()
         self._generate_chord_main_ea()
+        self._sweep()
         self._generate_bcs()
         self._calc_area()
         self._calc_moment_area()
@@ -309,6 +314,14 @@ class swept_tip_goland:
         self.chord_nodal = self.x_te - self.x_le
         self.elastic_axis_nodal = (self.x - self.x_le)/self.chord_nodal
 
+    ### Sweep whole wing
+    def _sweep(self):
+        x_new = np.cos(self.sweep)*self.x + np.sin(self.sweep)*self.y
+        y_new = np.cos(self.sweep)*self.y - np.sin(self.sweep)*self.x
+
+        self.x = x_new
+        self.y = y_new
+
     ### Generate boundary conditions
     def _generate_bcs(self):
         self.boundary_conditions = np.zeros(self.n_node_surf, dtype=int)
@@ -447,8 +460,8 @@ class swept_tip_goland:
     ### Plot discretisation of beam
     def plot_beam_nodes(self):
         [_, ax] = plt.subplots(1, 1)
-        ax.plot(self.x, self.y, '.')
-        plt.vlines(self.b_ref, 'k--')
+        ax.plot(self.y, self.x, '.')
+        plt.vlines(self.b_ref, -10, 10, 'k', 'dashed')
         ax.axis('equal')
         plt.xlim(-0.5, self.b_ref+0.5)
         plt.ylim(np.min([self.x_le, self.x_te])-0.5, np.max([self.x_le, self.x_te])+0.5)
@@ -552,8 +565,8 @@ class swept_tip_goland:
         settings['AerogridLoader'] = {
             'unsteady': 'on',
             'aligned_grid': 'off',
-            'mstar': self.Mstar_fact * self.M,
-            'freestream_dir': self.u_inf_direction,
+            'mstar': int(self.Mstar_fact * self.M),
+            'freestream_dir': self.panel_direction,
             'wake_shape_generator': 'StraightWake',
             'wake_shape_generator_input': {'u_inf': self.u_inf,
                                             'u_inf_direction': self.u_inf_direction,
@@ -573,7 +586,7 @@ class swept_tip_goland:
                 'relaxation_factor': 0,
                 'aero_solver': 'StaticUvlm',
                 'aero_solver_settings': {
-                    'symmetry_condition': bool(self.n_surf % 2),
+                    'symmetry_condition': bool(self.n_surf % 2) and self.sym,
                     'symmetry_plane': 1,
                     'rho': self.rho,
                     'print_info': 'off',
@@ -608,7 +621,7 @@ class swept_tip_goland:
                                     'aero_solver': 'StepUvlm',
                                     'aero_solver_settings': {'print_info': 'off',
                                                 'num_cores': 8,
-                                                'symmetry_condition': bool(self.n_surf % 2),
+                                                'symmetry_condition': bool(self.n_surf % 2) and self.sym,
                                                 'symmetry_plane': 1,
                                                 'convection_scheme': 2,
                                                 'gamma_dot_filtering': 6,
