@@ -12,11 +12,7 @@ Generate a parametric swept-tip Goland wing
 
 Input arguments:
 case_name           String name for the case, vary this for each batch running case
-flow                List of the solvers in order for SHARPy to run
-ang_h               Angle of the wing kink/hinge in rad
-pos_frac_h          Fraction of the span from the root to the kink
-n_surf              Number of surfaces (1 or 2)
-disc_mode           Type of discretisation (see below)
+flow                List of the solvers in order for SHARPy to run    
 
 Outputs:
 wing                Object which stores all required input parameters for SHARPy
@@ -31,15 +27,10 @@ The wing can be discretised in a variety of ways by setting the disc_mode argume
 4 - Variable chord with pointed tip
 """
 class swept_tip_goland:
-    def __init__(self, case_name: str, flow: list, ang_h: float, pos_frac_h: float,
-                        n_surf: int, disc_mode: int, **kwargs):
+    def __init__(self, case_name: str, flow: list, **kwargs):
         
         # Load main parameters
         self.case_name = case_name
-        self.ang_h = ang_h
-        self.pos_frac_h = pos_frac_h
-        self.n_surf = n_surf
-        self.disc_mode = disc_mode
         self.flow = flow
 
         # Basic IO parameters
@@ -48,9 +39,13 @@ class swept_tip_goland:
         self.write_screen = kwargs.get('write_screen', 'on')
 
         # Load keyword parameters
-        self.M = kwargs.get('M', 16)
-        self.N = kwargs.get('N', 40)
-        self.u_inf = kwargs.get('u_inf', 60)
+        self.ang_h = kwargs.get('ang_h', np.deg2rad(0))     # Angle of the wing kink/hinge in rad. Positive is swept back
+        self.pos_frac_h = kwargs.get('pos_frac_h', 0.7)     # Fraction of the span from the root to the kink
+        self.n_surf = kwargs.get('n_surf', 2)               # Number of surfaces (1 or 2)
+        self.disc_mode = kwargs.get('disc_mode', 1)         # Type of discretisation (see above)
+        self.M = kwargs.get('M', 16)                        # Number of chordwise panels
+        self.N = kwargs.get('N', 40)*self.n_surf            # Number of spanwise panels (input is per wing)
+        self.u_inf = kwargs.get('u_inf', 60)                # Velocity (m/s)
         self.alpha = kwargs.get('alpha', np.deg2rad(3.0))
         self.beta = kwargs.get('beta', 0.0)
         self.yaw = kwargs.get('yaw', 0.0)
@@ -88,10 +83,7 @@ class swept_tip_goland:
         self.asym_v_max = kwargs.get('asym_v_max', 249)
         self.asym_v_num = kwargs.get('asym_v_num', 200)
 
-        self.quat = algebra.euler2quat(np.array([self.roll, self.alpha, self.yaw]))
-        self.u_inf_direction = np.array([np.cos(self.beta), np.sin(self.beta), 0.])
         self.dt = self.c_ref / self.M / self.u_inf
-        self.n_tstep = int(np.round(self.physical_time / self.dt))
 
         self.wake_cfl1 = kwargs.get('wake_cfl1', True)
         self.wake_dx1 = kwargs.get('wake_dx1', self.dt*self.u_inf)
@@ -112,10 +104,15 @@ class swept_tip_goland:
 
         # Calculate node and element counts
         self.n_elem_tot = self.N // 2
-        self.n_elem_surf = self.n_elem_tot // n_surf
+        self.n_elem_surf = self.n_elem_tot // self.n_surf
         self.n_node_surf = self.N // self.n_surf + 1
         self.n_node_tot = self.N + 1
         self.n_node_elem = 3
+
+        # Calculate other case parameters required in case settings
+        self.quat = algebra.euler2quat(np.array([self.roll, self.alpha, self.yaw]))
+        self.u_inf_direction = np.array([np.cos(self.beta), np.sin(self.beta), 0.])
+        self.n_tstep = int(np.round(self.physical_time / self.dt))
 
         # Make straight wing when below a threshold to prevent discretisation issues
         if abs(self.ang_h) < np.deg2rad(3):
@@ -124,7 +121,7 @@ class swept_tip_goland:
         # Basic checks on input
         assert self.n_surf < 3 and self.n_surf > 0, "Must use 1 or two surfaces"
         assert self.N % 2 == 0, "UVLM spanwise panels must be even"
-        assert self.n_elem_tot % n_surf == 0, "Cannot evenly distribute elements over surfaces"
+        assert self.n_elem_tot % self.n_surf == 0, "Cannot evenly distribute elements over surfaces"
 
         # Generate data required for simulation
         self._generate_beam_coords()
