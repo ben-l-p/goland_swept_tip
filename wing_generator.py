@@ -58,7 +58,8 @@ class swept_tip_goland:
         self.b_ref = kwargs.get('b_ref', 6.096)
         self.physical_time = kwargs.get('physical_time', 1.0)
         self.gravity_on = kwargs.get('gravity_on', True)
-        self.sigma = kwargs.get('sigma', 1.0)
+        self.sigma_1 = kwargs.get('sigma_1', 1.0)
+        self.sigma_2 = kwargs.get('sigma_2', 1.0)
         self.main_ea = kwargs.get('main_ea', 0.33)
         self.main_cg = kwargs.get('main_cg', 0.5)
         self.n_lumped_mass = kwargs.get('n_lumped_mass', 1)
@@ -85,14 +86,16 @@ class swept_tip_goland:
         self.asym_v_min = kwargs.get('asym_v_min', 50)
         self.asym_v_max = kwargs.get('asym_v_max', 249)
         self.asym_v_num = kwargs.get('asym_v_num', 200)
+        self.dt_factor = kwargs.get('dt_factor', 1)
 
-        self.dt = self.c_ref / self.M / self.u_inf
+        self.dt = self.c_ref / self.M / self.u_inf * self.dt_factor
 
         self.wake_cfl1 = kwargs.get('wake_cfl1', True)
         self.wake_dx1 = kwargs.get('wake_dx1', self.dt*self.u_inf)
         self.wake_ndx1 = kwargs.get('wake_ndx1', 20)
         self.wake_r = kwargs.get('wake_r', 1.1)
         self.wake_dxmax = kwargs.get('wake_dxmax', 30*self.wake_dx1)
+        self.wake_conv = kwargs.get('wake_conv', 2)
 
         if self.wake_cfl1:
             self.Mstar_fact = kwargs.get('Mstar_fact', 10)
@@ -365,8 +368,12 @@ class swept_tip_goland:
     ### Generate mass and stiffness matrices
     def _generate_mass_stiff(self):
         self.stiffness = np.zeros((1, 6, 6))
-        self.stiffness[0, :, :] = np.diag([self.ea, self.ga, self.ga, \
-                                self.sigma*self.gj, self.sigma*self.eiy, self.eiz])
+        self.stiffness[0, :, :] = np.diag([self.sigma_2*self.ea,
+                                            self.sigma_2*self.ga, 
+                                            self.sigma_2*self.ga,
+                                            self.sigma_1*self.gj, 
+                                            self.sigma_1*self.eiy, 
+                                            self.sigma_2*self.eiz])
         
         pos_cg_b = np.array([0., self.c_ref * (self.main_cg - self.main_ea), 0.])
         m_chi_cg = algebra.skew(self.m_unit * pos_cg_b)
@@ -552,7 +559,7 @@ class swept_tip_goland:
                 'flow': self.flow,
                 'case': self.case_name,
                 'route': self.route,
-                'write_screen': 'on',
+                'write_screen': self.write_screen,
                 'write_log': 'on',
                 'log_folder': self.route_dir + '/output/',
                 'log_file': self.case_name + '.log',
@@ -614,6 +621,8 @@ class swept_tip_goland:
                                                 'max_iterations': 950,
                                                 'delta_curved': 1e-1,
                                                 'newmark_damp': 5e-3,
+                                                'min_delta': 1e-5,
+                                                'abs_threshold': 1e-13,
                                                 'gravity_on': True,
                                                 'gravity': 9.81,
                                                 'num_steps': self.n_tstep,
@@ -623,14 +632,14 @@ class swept_tip_goland:
                                                 'num_cores': 8,
                                                 'symmetry_condition': bool(self.n_surf % 2) and self.sym,
                                                 'symmetry_plane': 1,
-                                                'convection_scheme': 2,
+                                                'convection_scheme': self.wake_conv,
                                                 'gamma_dot_filtering': 6,
                                                 'n_time_steps': self.n_tstep,
                                                 'dt': self.dt,
                                                 'cfl1': self.wake_cfl1,
                                                 'velocity_field_generator': 'GustVelocityField',
                                                 'velocity_field_input': {'u_inf': self.u_inf,
-                                                                        'u_inf_direction': [1., 0, 0],
+                                                                        'u_inf_direction': self.u_inf_direction,
                                                                         'gust_shape': '1-cos',
                                                                         'gust_parameters': {'gust_length': self.gust_length,
                                                                                             'gust_intensity': self.gust_intensity * self.u_inf},

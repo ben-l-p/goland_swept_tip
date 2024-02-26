@@ -20,6 +20,12 @@ def case_data_extract(wing, case_data):
                 'x': wing.x, 
                 'y': wing.y, 
                 'z': wing.z,
+                'n_surf': wing.n_surf,
+                'n_elem_tot': wing.n_elem_tot,
+                'n_elem_surf': wing.n_elem_surf,
+                'n_node_surf': wing.n_node_surf,
+                'n_node_tot': wing.n_node_tot,
+                'n_node_elem': wing.n_node_elem
                 }
     
     n_t_steps_save = 1
@@ -31,6 +37,15 @@ def case_data_extract(wing, case_data):
 
     dict_out.update({'beam_pos': beam_pos})
 
+    zeta_star = np.zeros([n_t_steps_save] + list(case_data.aero.timestep_info[0].zeta_star[0].shape))
+    gamma_star = np.zeros([n_t_steps_save] + list(case_data.aero.timestep_info[0].gamma_star[0].shape))
+
+    for i_t in range(n_t_steps_save):
+        zeta_star[i_t, :, :] = case_data.aero.timestep_info[i_t].zeta_star[0]
+        gamma_star[i_t, :, :] = case_data.aero.timestep_info[i_t].gamma_star[0]
+
+    dict_out.update({'zeta_star': zeta_star, 'gamma_star': gamma_star})
+    
     if 'Modal' in wing.flow:
         mode_freqs = np.squeeze(pandas.read_csv('./output/%s/beam_modal_analysis/frequencies.dat' % wing.case_name, header=None))
         modal_dict = {'mode_freqs': mode_freqs}
@@ -39,15 +54,25 @@ def case_data_extract(wing, case_data):
     if 'AeroForcesCalculator' in wing.flow:
         force_data = pandas.read_csv('./output/%s/forces/forces_aeroforces.txt' % wing.case_name, delimiter=', ', index_col=False).to_dict()
         moment_data = pandas.read_csv('./output/%s/forces/moments_aeroforces.txt' % wing.case_name, delimiter=', ', index_col=False).to_dict()
+
+        forces_a_s = np.zeros([n_t_steps_save, 3])
+        forces_g_s = np.zeros([n_t_steps_save, 3])
+        moments_a_s = np.zeros([n_t_steps_save, 3])
+        moments_g_s = np.zeros([n_t_steps_save, 3])
+        forces_a_u = np.zeros([n_t_steps_save, 2])
+        forces_g_u = np.zeros([n_t_steps_save, 3])
+        moments_a_u = np.zeros([n_t_steps_save, 3])
+        moments_g_u = np.zeros([n_t_steps_save, 3])
+
         for i_ts in range(n_t_steps_save):
-            forces_a_s = [force_data['fx_steady_a'][i_ts], force_data['fy_steady_a'][i_ts], force_data['fz_steady_a'][i_ts]]
-            forces_g_s = [force_data['fx_steady_G'][i_ts], force_data['fy_steady_G'][i_ts], force_data['fz_steady_G'][i_ts]]
-            moments_a_s = [moment_data['mx_steady_a'][i_ts], moment_data['my_steady_a'][i_ts], moment_data['mz_steady_a'][i_ts]]
-            moments_g_s = [moment_data['mx_steady_G'][i_ts], moment_data['my_steady_G'][i_ts], moment_data['mz_steady_G'][i_ts]]
-            forces_a_u = [force_data['fx_unsteady_a'][i_ts], force_data['fy_unsteady_a'][i_ts]]
-            forces_g_u = [force_data['fx_unsteady_G'][i_ts], force_data['fy_unsteady_G'][i_ts], force_data['fz_unsteady_G'][i_ts]]
-            moments_a_u = [moment_data['mx_unsteady_a'][i_ts], moment_data['my_unsteady_a'][i_ts], moment_data['mz_unsteady_a'][i_ts]]
-            moments_g_u = [moment_data['mx_unsteady_G'][i_ts], moment_data['my_unsteady_G'][i_ts], moment_data['mz_unsteady_G'][i_ts]]
+            forces_a_s[i_ts, :] = [force_data['fx_steady_a'][i_ts], force_data['fy_steady_a'][i_ts], force_data['fz_steady_a'][i_ts]]
+            forces_g_s[i_ts, :] = [force_data['fx_steady_G'][i_ts], force_data['fy_steady_G'][i_ts], force_data['fz_steady_G'][i_ts]]
+            moments_a_s[i_ts, :] = [moment_data['mx_steady_a'][i_ts], moment_data['my_steady_a'][i_ts], moment_data['mz_steady_a'][i_ts]]
+            moments_g_s[i_ts, :] = [moment_data['mx_steady_G'][i_ts], moment_data['my_steady_G'][i_ts], moment_data['mz_steady_G'][i_ts]]
+            forces_a_u[i_ts, :] = [force_data['fx_unsteady_a'][i_ts], force_data['fy_unsteady_a'][i_ts]]
+            forces_g_u[i_ts, :] = [force_data['fx_unsteady_G'][i_ts], force_data['fy_unsteady_G'][i_ts], force_data['fz_unsteady_G'][i_ts]]
+            moments_a_u[i_ts, :] = [moment_data['mx_unsteady_a'][i_ts], moment_data['my_unsteady_a'][i_ts], moment_data['mz_unsteady_a'][i_ts]]
+            moments_g_u[i_ts, :] = [moment_data['mx_unsteady_G'][i_ts], moment_data['my_unsteady_G'][i_ts], moment_data['mz_unsteady_G'][i_ts]]
         
         force_dict = {"moments_a_s": moments_a_s, 
                             "moments_g_s": moments_g_s, 
