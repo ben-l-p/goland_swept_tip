@@ -54,7 +54,7 @@ for i_case in range(3):
                                 gust_intensity = 0.5,
                                 gust_length = 0.005 * u_inf,
                                 gust_offset = 0.0025 * u_inf,
-                                physical_time = 0.1,
+                                physical_time = 1.5,
                                 sigma = 1e6,
                                 sym = False)
 

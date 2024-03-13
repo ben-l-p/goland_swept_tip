@@ -51,7 +51,8 @@ class swept_tip_goland:
         self.beta = kwargs.get('beta', 0.0)
         self.yaw = kwargs.get('yaw', 0.0)
         self.roll = kwargs.get('roll', 0.0)
-        self.sweep = kwargs.get('sweep', 0.0)
+        self.sweep_beam = kwargs.get('sweep_beam', 0.0)
+        self.sweep_panel = kwargs.get('sweep_panel', 0.0)
         self.ang_panel = kwargs.get('ang_panel', 0.0)
         self.rho = kwargs.get('rho', 1.225)
         self.c_ref = kwargs.get('c_ref', 1.8288)
@@ -319,8 +320,8 @@ class swept_tip_goland:
 
     ### Sweep whole wing
     def _sweep(self):
-        x_new = np.cos(self.sweep)*self.x + np.sin(self.sweep)*self.y
-        y_new = np.cos(self.sweep)*self.y - np.sin(self.sweep)*self.x
+        x_new = np.cos(self.sweep_beam)*self.x + np.sin(self.sweep_beam)*self.y
+        y_new = np.cos(self.sweep_beam)*self.y - np.sin(self.sweep_beam)*self.x
 
         self.x = x_new
         self.y = y_new
@@ -517,6 +518,8 @@ class swept_tip_goland:
             h5file.create_dataset('control_surface_deflection', data=[])
             h5file.create_dataset('control_surface_chord', data=[])
             h5file.create_dataset('control_surface_hinge_coord', data=[])
+
+            h5file.create_dataset('sweep', data = self.sweep_panel*np.ones([self.n_elem_tot, 3]))
 
     ### Generate settings H5 file
     def write_config_file(self):

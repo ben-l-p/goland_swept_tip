@@ -9,6 +9,7 @@ import sharpy.sharpy_main
 from wing_generator import swept_tip_goland
 import helper_functions.convergence_utils as convergence
 import helper_functions.case_data_extract as case_data_extract
+import helper_functions.biot_savart as biot_savart
 
 ### Disable warnings for more readable output
 warnings.filterwarnings("ignore")    
@@ -41,11 +42,12 @@ ar = 10
 pnts = np.array([[3.0, 0.0, 0.0], [7.5, 7.5, 0.0],\
                 [11.0, 14.0, 0.0], [15.0, 14.0, 0.0], \
                 [11.0, 15.0, 0.0], [15.0, 15.0, 0.0],\
-                [11.0, 16.0, 0], [15.0, 16.0, 0]]).T
+                [11.0, 16.0, 0.0], [15.0, 16.0, 0.0]]).T
 
 # Dictionary of final converged paramters and case data   
 disc_final = {'aligned': dict(), 'misaligned': dict()}
 case_data_final = dict()
+wing_final = dict()
 
 # Discretisation study parameters, in M, N, M* order
 disc_init = [3, 8, 20]
@@ -55,7 +57,7 @@ max_iter = 20                           # Maximum number of convergence iteratio
 
 ### Discretisation study
 ### Loop this code, varying parameters each run
-for i_disc in [0, 1]:
+for i_disc in range(2):
 
         case_data_curr = None                   # Case data for current case
         case_data_conv = None                   # Case data for converged case                            
@@ -82,15 +84,15 @@ for i_disc in [0, 1]:
                 # Generate wing and run SHARPy
                 wing = swept_tip_goland(case_name, flow,
                                         c_ref = [c_ref/np.cos(sweep), c_ref][i_disc],
-                                        ang_panel = [0, -sweep][i_disc],
-                                        sweep = sweep,
+                                        sweep_beam = sweep,
+                                        sweep_panel = [0, -sweep][i_disc],
                                         u_inf = u_inf,
                                         n_surf = 1,
                                         b_ref = c_ref*ar,
                                         gust_intensity = 0.5,
                                         gust_length = 0.2 * u_inf,
                                         gust_offset = 0.1 * u_inf,
-                                        physical_time = 0.1,
+                                        physical_time = 1.5,
                                         M = params['M'],
                                         N = params['N'],
                                         Mstar_fact = params['Msf'],
@@ -100,11 +102,14 @@ for i_disc in [0, 1]:
                 
                 case_data_curr = sharpy.sharpy_main.main(['', wing.route + wing.case_name + '.sharpy'])
                 
+                # biot_savart.plot_points(case_data_curr, pnts, 0)
+
                 # Check for initial or final case
                 if i_case == 0:
                         continue
                 elif is_final or i_case + 1 == max_iter:
                         case_data_final.update({['aligned', 'misaligned'][i_disc] : case_data_curr})
+                        wing_final.update({['aligned', 'misaligned'][i_disc] : wing})
                         disc_final.update({['aligned', 'misaligned'][i_disc] : params})
                         break
 
@@ -134,7 +139,9 @@ convergence.is_converged(case_data_final['aligned'], case_data_final['misaligned
 
 # Extract key data from system and output to matlab
 case_data_out = dict()
-case_data_out.update({'aligned': case_data_extract.case_data_extract(case_data_final['aligned'])})
-case_data_out.update({'misaligned': case_data_extract.case_data_extract(case_data_final['misaligned'])})
+case_data_out.update({'aligned': case_data_extract.case_data_extract(\
+        wing_final['aligned'], case_data_final['aligned'])})
+case_data_out.update({'misaligned': case_data_extract.case_data_extract(\
+        wing_final['misaligned'], case_data_final['misaligned'])})
 case_data_out.update({'disc_final': disc_final})
 spio.savemat('convergence_out.mat', case_data_out)

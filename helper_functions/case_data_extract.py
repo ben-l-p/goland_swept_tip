@@ -37,14 +37,18 @@ def case_data_extract(wing, case_data):
 
     dict_out.update({'beam_pos': beam_pos})
 
+    zeta = np.zeros([n_t_steps_save] + list(case_data.aero.timestep_info[0].zeta[0].shape))
+    gamma = np.zeros([n_t_steps_save] + list(case_data.aero.timestep_info[0].gamma[0].shape))
     zeta_star = np.zeros([n_t_steps_save] + list(case_data.aero.timestep_info[0].zeta_star[0].shape))
     gamma_star = np.zeros([n_t_steps_save] + list(case_data.aero.timestep_info[0].gamma_star[0].shape))
 
     for i_t in range(n_t_steps_save):
+        zeta[i_t, :, :] = case_data.aero.timestep_info[i_t].zeta[0]
+        gamma[i_t, :, :] = case_data.aero.timestep_info[i_t].gamma[0]
         zeta_star[i_t, :, :] = case_data.aero.timestep_info[i_t].zeta_star[0]
         gamma_star[i_t, :, :] = case_data.aero.timestep_info[i_t].gamma_star[0]
 
-    dict_out.update({'zeta_star': zeta_star, 'gamma_star': gamma_star})
+    dict_out.update({'zeta': zeta, 'gamma': gamma, 'zeta_star': zeta_star, 'gamma_star': gamma_star})
     
     if 'Modal' in wing.flow:
         mode_freqs = np.squeeze(pandas.read_csv('./output/%s/beam_modal_analysis/frequencies.dat' % wing.case_name, header=None))

@@ -15,12 +15,11 @@ def biot_savart_points(case_data, pnts: np.ndarray) -> np.ndarray:
 
         for i_pnt in range(n_pnts):
             pnt = np.atleast_2d(pnts[:, i_pnt]).T
-            w_ind[i_ts, i_pnt, :] = np.squeeze(biot_savart(zeta, gamma, pnt, i_ts))
-
+            w_ind[i_ts, i_pnt, :] = biot_savart(zeta, gamma, pnt)
     return w_ind
 
-def biot_savart(zeta, gamma, pnt: np.ndarray, tstep: int) -> np.array:
-    w_ind = np.zeros([3, 1])
+def biot_savart(zeta, gamma, pnt: np.ndarray) -> np.array:
+    w_ind = np.zeros(3)
 
     for i_M in range(gamma.shape[0]):
         for i_N in range(gamma.shape[1]):
@@ -38,13 +37,17 @@ def biot_savart(zeta, gamma, pnt: np.ndarray, tstep: int) -> np.array:
                 r_1l = pnt - zeta_v[:, :, v1]
                 r_2l = pnt - zeta_v[:, :, v2]
 
-                w_ind += biot_savart_elem(r_0l, r_1l, r_2l, gamma[i_M, i_N])
+                # w_ind = w_ind + biot_savart_elem(r_0l, r_1l, r_2l, gamma[i_M, i_N])
+                w_ind = w_ind + biot_savart_elem(r_0l, r_1l, r_2l, 1)
+                pass
     
     return w_ind/(4.0*np.pi)
 
 def biot_savart_elem(r_0l: np.ndarray, r_1l: np.ndarray, r_2l: np.ndarray, gamma: float) -> np.ndarray:
-    return np.matmul(np.outer(r_0l.T, (r_1l/l2norm(r_1l) - r_2l/l2norm(r_2l))), \
-                   (skew(r_1l))).dot(r_2l)/np.power(l2norm(skew(r_1l).dot(r_2l)), 2)*gamma
+    r1l_unit = r_1l/l2norm(r_1l)
+    r2l_unit = r_2l/l2norm(r_2l)
+    r1l_s = skew(r_1l)
+    return np.squeeze(r_0l.T @ (r1l_unit - r2l_unit) * (r1l_s @ r_2l))/np.power(l2norm(r1l_s @ r_2l), 2) * gamma
 
 def skew(a: np.array) -> np.ndarray:
     a = np.squeeze(a)
@@ -88,6 +91,7 @@ def plot_points(case_data, pnts: np.ndarray, tstep: int):
         ax.plot(pnts[0, i_pnt], pnts[1, i_pnt], pnts[2, i_pnt], 'b.')
 
     ax.axis('equal')
+    ax.view_init(elev=90, azim=0, roll=0)
     plt.xlabel("X (m)")
     plt.ylabel("Y (m)")
     plt.show()

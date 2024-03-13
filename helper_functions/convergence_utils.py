@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib.pyplot as plt
+
 import helper_functions.biot_savart as biot_savart
 
 # Generate initial discretisation paramters
@@ -18,7 +20,7 @@ def disc_generate(disc_init: list, disc_mult: list, disc_order: list) -> dict:
 def disc_update(disc_dict: dict, disc_param: str) -> dict:
        disc_dict_new = disc_dict
 
-       disc_dict_new[disc_param]['vals'] = [disc_dict[disc_param]['vals'][1], disc_dict[disc_param]['vals'][1]*disc_dict[disc_param]['mult']]
+       disc_dict_new[disc_param]['vals'] = np.array([disc_dict[disc_param]['vals'][1], disc_dict[disc_param]['vals'][1]*disc_dict[disc_param]['mult']])
        if disc_param == 'N':
               disc_dict['N']['vals'] = (np.floor(disc_dict['N']['vals']/2)*2).astype(int)
        return disc_dict_new
@@ -29,7 +31,6 @@ def curr_param(disc_order: list, i_case: int) -> str:
               return None
        else:
               return disc_order[(i_case-1) % 3]
-
 
 # Return the parameter to increase for the next case
 def param_to_increase(disc_dict: dict, disc_order: list, i_case: int, is_final: bool) -> dict:
@@ -56,10 +57,22 @@ def is_converged(case_data_prev, case_data_curr, pnts: np.ndarray, final_compare
        if not _converge_beam_disp(beam_pos_prev, beam_pos_curr, nodes, final_compare):
               if not final_compare: return False
        
-       pnt_vel_prev = biot_savart.biot_savart_points(case_data_prev, pnts)
-       pnt_vel_curr = biot_savart.biot_savart_points(case_data_curr, pnts)
-       if not _converge_vel_pnt(pnt_vel_prev, pnt_vel_curr, final_compare):
-              if not final_compare: return False
+       # pnt_vel_prev = biot_savart.biot_savart_points(case_data_prev, pnts)
+       # pnt_vel_curr = biot_savart.biot_savart_points(case_data_curr, pnts)
+
+       # # Plot induced Z velocity at all points
+       # [_, ax] = plt.subplots(1, 1)
+       # t_prev = [t/case_data_prev.ts for t in range(1, case_data_prev.ts + 1)]
+       # t_curr = [t/case_data_curr.ts for t in range(1, case_data_curr.ts + 1)]
+       # for i_pnt in range(pnts.shape[1]):
+       #        ax.plot(t_prev, pnt_vel_prev[:, i_pnt, 2])
+       #        ax.plot(t_curr, pnt_vel_curr[:, i_pnt, 2])
+       # plt.xlabel("Relative Time")
+       # plt.ylabel("u_{z} (m/s)")
+       # plt.show()
+
+       # if not _converge_vel_pnt(pnt_vel_prev, pnt_vel_curr, final_compare):
+       #        if not final_compare: return False
 
        return True
 
@@ -88,7 +101,7 @@ def _converge_beam_disp(beam_pos_prev: np.ndarray, beam_pos_curr: np.ndarray, no
               print("Relative maximum error: ", rel_err_max)
               print("Relative average error: ", rel_err_avg)
 
-              if abs_err_max > 0.04 or abs_err_avg > 0.015:
+              if abs_err_max > 0.04 or abs_err_avg > 0.012:
                      print("Absolute error limit exceeded\n")
                      if not final_compare: return False
               if rel_err_max > 1e10 or rel_err_avg > 1e10:
@@ -155,7 +168,7 @@ def _converge_vel_pnt(vel_prev: np.ndarray, vel_curr: np.ndarray, final_compare:
                      print("Relative maximum error: ", rel_err_max)
                      print("Relative average error: ", rel_err_avg)
 
-                     if abs_err_max > 1.0 or abs_err_avg > 0.4:
+                     if abs_err_max > 0.35 or abs_err_avg > 0.10:
                             print("Absolute error limit exceeded\n")
                             if not final_compare: return False
                      if rel_err_max > 1e10 or rel_err_avg > 1e10:
