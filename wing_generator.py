@@ -20,11 +20,12 @@ wing                Object which stores all required input parameters for SHARPy
 
 Wing discretisation:
 The wing can be discretised in a variety of ways by setting the disc_mode argument
-0 - Regular straight Goland wing. Any other mode with a sufficiently low hinge angle will be set to this
+0 - Regular straight Goland wing. Any mode with a sufficiently low hinge angle will be set to this
 1 - Constant chord with span reduction  
 2 - Constant chord with no span reduction (correct area)
 3 - Variable chord with flat tip
 4 - Variable chord with pointed tip
+5 - Continuous swept panel
 """
 class swept_tip_goland:
     def __init__(self, case_name: str, flow: list, **kwargs):
@@ -134,7 +135,7 @@ class swept_tip_goland:
         # Generate data required for simulation
         self._generate_beam_coords()
         self._generate_chord_main_ea()
-        self._sweep()
+        self._sweep_beam()
         self._generate_bcs()
         self._calc_area()
         self._calc_moment_area()
@@ -198,11 +199,7 @@ class swept_tip_goland:
             case 0:
                 h_nd = nd(eta_lin, self.node_bias[3], self.node_bias[4], self.pos_frac_h)
 
-            case 1:
-                h_nd = nd(eta_lin, self.node_bias[3], self.node_bias[4], self.pos_frac_h)
-                eta_fixed.append(self.pos_frac_h)
-
-            case 2:
+            case 1 | 2:
                 h_nd = nd(eta_lin, self.node_bias[3], self.node_bias[4], self.pos_frac_h)
                 eta_fixed.append(self.pos_frac_h)
 
@@ -217,7 +214,12 @@ class swept_tip_goland:
                 eta_fixed.append(self.pos_frac_h)
                 eta_fixed.extend(self._le_te_h_eta())
                 eta_fixed.append(self._ntc_eta())
-        
+
+            case 5:
+                h_nd = nd(eta_lin, self.node_bias[3], self.node_bias[4], self.pos_frac_h)
+                t_nd = nd(eta_lin, self.node_bias[5], self.node_bias[6], 1)
+                eta_fixed.append(self.pos_frac_h)
+
         # Scale node spacing function to enforce predetermined nodes
         tot_nd = np.fmin(w_nd + h_nd + t_nd, self.node_bias[0])[1:]
         
@@ -259,7 +261,7 @@ class swept_tip_goland:
         self.x = np.zeros_like(self.y)
         self.z = np.zeros_like(self.y)
         
-        if self.disc_mode in [1, 3, 4]:
+        if self.disc_mode in [1, 3, 4, 5]:
             self.x[self.node_h+1:] = np.sin(self.ang_h)*(self.y[self.node_h+1:] - self.pos_frac_h*self.b_ref)
             self.y[self.node_h+1:] = (self.y[self.node_h+1:] - self.pos_frac_h*self.b_ref)*np.cos(self.ang_h) + self.pos_frac_h*self.b_ref
         elif self.disc_mode == 2:
@@ -267,6 +269,8 @@ class swept_tip_goland:
 
     ### Generate chord length and elastic axis position for every beam node
     def _generate_chord_main_ea(self):
+
+        self.panel_sweep_elem = self.sweep_panel*np.ones([self.n_elem_tot, 3])
         match self.disc_mode:
             case 0:
                 self.x_le = self.x-self.c_ref*self.main_ea
@@ -307,19 +311,40 @@ class swept_tip_goland:
                     self.x_le = self._edge_2_kink(y_kinks[0], y_kinks[2], -self.c_ref*self.main_ea)
                     self.x_te = self._edge_1_kink(y_kinks[1], self.c_ref*(1-self.main_ea))
 
-        self.chord = np.ones([self.n_elem_surf, 3])
-        self.elastic_axis = np.ones([self.n_elem_surf, 3])
-        for i_elem in range(self.n_elem_surf):
-            for j_elem in range(3):
-                self.chord[i_elem, j_elem] *= (self.x_te[2*i_elem + j_elem] - self.x_le[2*i_elem + j_elem])
-                self.elastic_axis[i_elem, j_elem] *= (self.x[2*i_elem + j_elem] - \
-                                                      self.x_le[2*i_elem + j_elem])/self.chord[i_elem, j_elem]
+            case 0 | 1 | 2 | 3 | 4:
+                self.chord = np.ones([self.n_elem_surf, 3])
+                self.elastic_axis = np.ones([self.n_elem_surf, 3])
+                for i_elem in range(self.n_elem_surf):
+                    for j_elem in range(3):                     #TODO: fix chord and ea values to be in 0, 2, 1 order
+                        self.chord[i_elem, j_elem] *= (self.x_te[2*i_elem + j_elem] - self.x_le[2*i_elem + j_elem])
+                        self.elastic_axis[i_elem, j_elem] *= (self.x[2*i_elem + j_elem] - \
+                                                            self.x_le[2*i_elem + j_elem])/self.chord[i_elem, j_elem]
+                        
+                self.chord_nodal = self.x_te - self.x_le
+                self.elastic_axis_nodal = (self.x - self.x_le)/self.chord_nodal
+
+            case 5:
+                panel_sweep_nodal = np.zeros(self.n_node_surf)
+                panel_sweep_nodal[:self.node_h+1] = -(self.eta[:self.node_h+1]/self.eta[self.node_h])*(self.ang_h/2)
+                panel_sweep_nodal[self.node_h:] = -((self.eta[self.node_h:]-self.eta[self.node_h])/(1-self.eta[self.node_h])+1)*(self.ang_h/2)
                 
-        self.chord_nodal = self.x_te - self.x_le
-        self.elastic_axis_nodal = (self.x - self.x_le)/self.chord_nodal
+                relative_sweep_nodal = np.copy(panel_sweep_nodal)
+                relative_sweep_nodal[self.node_h:] = -self.ang_h - relative_sweep_nodal[self.node_h:]
+                self.chord_nodal = self.c_ref/np.cos(relative_sweep_nodal)
+
+                self.chord = np.zeros([self.n_elem_surf, 3])
+                self.elastic_axis = self.main_ea*np.ones([self.n_elem_surf, 3])
+
+                for i_elem in range(self.n_elem_surf):
+                    self.panel_sweep_elem[i_elem, 0] = panel_sweep_nodal[i_elem*2]
+                    self.panel_sweep_elem[i_elem, 1] = panel_sweep_nodal[i_elem*2+2]
+                    self.panel_sweep_elem[i_elem, 2] = panel_sweep_nodal[i_elem*2+1]
+                    self.chord[i_elem, 0] = self.chord_nodal[i_elem*2]
+                    self.chord[i_elem, 1] = self.chord_nodal[i_elem*2+2]
+                    self.chord[i_elem, 2] = self.chord_nodal[i_elem*2+1]
 
     ### Sweep whole wing
-    def _sweep(self):
+    def _sweep_beam(self):
         x_new = np.cos(self.sweep_beam)*self.x + np.sin(self.sweep_beam)*self.y
         y_new = np.cos(self.sweep_beam)*self.y - np.sin(self.sweep_beam)*self.x
 
@@ -518,8 +543,7 @@ class swept_tip_goland:
             h5file.create_dataset('control_surface_deflection', data=[])
             h5file.create_dataset('control_surface_chord', data=[])
             h5file.create_dataset('control_surface_hinge_coord', data=[])
-
-            h5file.create_dataset('sweep', data = self.sweep_panel*np.ones([self.n_elem_tot, 3]))
+            h5file.create_dataset('sweep', data = self.panel_sweep_elem)
 
     ### Generate settings H5 file
     def write_config_file(self):
