@@ -8,4 +8,5 @@
 *.csv
 *.sharpy
 *.mat
+*.avi
 .DS_Store
