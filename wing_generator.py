@@ -137,8 +137,6 @@ class swept_tip_goland:
         self._generate_chord_main_ea()
         self._sweep_beam()
         self._generate_bcs()
-        self._calc_area()
-        self._calc_moment_area()
         self._generate_mass_stiff()
         self._generate_connectivity_surf()
         self._generate_fem_params()
@@ -311,18 +309,6 @@ class swept_tip_goland:
                     self.x_le = self._edge_2_kink(y_kinks[0], y_kinks[2], -self.c_ref*self.main_ea)
                     self.x_te = self._edge_1_kink(y_kinks[1], self.c_ref*(1-self.main_ea))
 
-            case 0 | 1 | 2 | 3 | 4:
-                self.chord = np.ones([self.n_elem_surf, 3])
-                self.elastic_axis = np.ones([self.n_elem_surf, 3])
-                for i_elem in range(self.n_elem_surf):
-                    for j_elem in range(3):                     #TODO: fix chord and ea values to be in 0, 2, 1 order
-                        self.chord[i_elem, j_elem] *= (self.x_te[2*i_elem + j_elem] - self.x_le[2*i_elem + j_elem])
-                        self.elastic_axis[i_elem, j_elem] *= (self.x[2*i_elem + j_elem] - \
-                                                            self.x_le[2*i_elem + j_elem])/self.chord[i_elem, j_elem]
-                        
-                self.chord_nodal = self.x_te - self.x_le
-                self.elastic_axis_nodal = (self.x - self.x_le)/self.chord_nodal
-
             case 5:
                 panel_sweep_nodal = np.zeros(self.n_node_surf)
                 panel_sweep_nodal[:self.node_h+1] = -(self.eta[:self.node_h+1]/self.eta[self.node_h])*(self.ang_h/2)
@@ -339,9 +325,24 @@ class swept_tip_goland:
                     self.panel_sweep_elem[i_elem, 0] = panel_sweep_nodal[i_elem*2]
                     self.panel_sweep_elem[i_elem, 1] = panel_sweep_nodal[i_elem*2+2]
                     self.panel_sweep_elem[i_elem, 2] = panel_sweep_nodal[i_elem*2+1]
+                    # self.panel_sweep_elem[i_elem, 0] = 0
+                    # self.panel_sweep_elem[i_elem, 1] = 0
+                    # self.panel_sweep_elem[i_elem, 2] = 0
                     self.chord[i_elem, 0] = self.chord_nodal[i_elem*2]
                     self.chord[i_elem, 1] = self.chord_nodal[i_elem*2+2]
                     self.chord[i_elem, 2] = self.chord_nodal[i_elem*2+1]
+
+        if self.disc_mode in [0, 1, 2, 3, 4]:
+            self.chord = np.ones([self.n_elem_surf, 3])
+            self.elastic_axis = np.ones([self.n_elem_surf, 3])
+            for i_elem in range(self.n_elem_surf):
+                for j_elem in range(3):                     #TODO: fix chord and ea values to be in 0, 2, 1 order
+                    self.chord[i_elem, j_elem] *= (self.x_te[2*i_elem + j_elem] - self.x_le[2*i_elem + j_elem])
+                    self.elastic_axis[i_elem, j_elem] *= (self.x[2*i_elem + j_elem] - \
+                                                        self.x_le[2*i_elem + j_elem])/self.chord[i_elem, j_elem]
+                    
+            self.chord_nodal = self.x_te - self.x_le
+            self.elastic_axis_nodal = (self.x - self.x_le)/self.chord_nodal
 
     ### Sweep whole wing
     def _sweep_beam(self):
@@ -452,15 +453,6 @@ class swept_tip_goland:
         self.twist = np.zeros([self.n_elem_tot, 3])
         self.surface_m = self.M*np.ones(self.n_surf, dtype=int)
         self.aero_node = np.ones(self.n_node_tot, dtype=bool)
-
-    def _calc_area(self):
-        self.area = np.trapz(self.chord_nodal, self.y)
-
-    def _calc_moment_area(self):
-        self.area_moment = 0
-        for i_elem in range(self.n_elem_surf-1):
-            self.area_moment += (self.y[i_elem]+self.y[i_elem+1])/2*\
-                np.trapz(self.chord_nodal[i_elem:i_elem+2], self.y[i_elem:i_elem+2])
 
     ### Plot shape of wing  
     def plot_wing(self):

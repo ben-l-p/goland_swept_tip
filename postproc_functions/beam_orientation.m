@@ -1,5 +1,8 @@
-close all; clear all;   clc;
-load("beam_orientation.mat");
+close all; clc;
+% load("beam_orientation.mat");
+
+psi = data.psi;
+pos = data.beam_pos;
 
 [n_tstep, n_node] = size(pos, [1, 2]);
 n_elem = (n_node - 1)/2;
@@ -31,20 +34,20 @@ for i_elem = 1:n_elem
 end
 
 %% Plot 3D beam with orientation triads
-% i_ts = 60;
+i_ts = 60;
 c_ref = 1.8288;
 ea = 0.33;
-triad_scale = 0.5;
+triad_scale = 0.2;
 triad_colour = 'rgb';
 
-frames = struct('cdata',[],'colormap',[]);
-v = VideoWriter("beam_orientation.avi");
-open(v);
+% frames = struct('cdata',[],'colormap',[]);
+% v = VideoWriter("beam_orientation.avi");
+% open(v);
 
 fig = figure();
 
-for i_ts = 1:n_tstep
-    clf(fig);
+% for i_ts = 1:n_tstep
+%     clf(fig);
 
     hold on;
 
@@ -61,7 +64,7 @@ for i_ts = 1:n_tstep
     % Plot beam line
     plot3(pos(i_ts, :, 1), pos(i_ts, :, 2), pos(i_ts, :, 3), 'k-');
     
-    % Plot B triad
+    % Plot A triad
     for i_dir = 1:3
         vect_b = u_vect(i_dir)*3;
         quiver3(0, 0, 0, vect_b(1), vect_b(2), vect_b(3), ...
@@ -73,7 +76,7 @@ for i_ts = 1:n_tstep
         pos_node = squeeze(pos(i_ts, i_node, :));
         scatter3(pos_node(1), pos_node(2), pos_node(3), 100, 'k.');
     
-        % Plot S triads
+        % Plot B triads
         for i_dir = 1:3
             u_vect_s = squeeze(R_bs_node(i_ts, i_node, :, :))*u_vect(i_dir)*triad_scale;
             quiver3(pos_node(1), pos_node(2), pos_node(3), ...
@@ -82,20 +85,20 @@ for i_ts = 1:n_tstep
         end
     
         % Plot chord
-        c_part = [-c_ref*ea, c_ref*(1-ea)];
-        for i_dir = 1:2
-            u_vect_s = squeeze(R_bs_node(i_ts, i_node, :, :))*u_vect(2)*c_part(i_dir);
-            quiver3(pos_node(1), pos_node(2), pos_node(3), ...
-                u_vect_s(1), u_vect_s(2), u_vect_s(3),'k');
-        end
+        % c_part = [-c_ref*ea, c_ref*(1-ea)];
+        % for i_dir = 1:2
+        %     u_vect_s = squeeze(R_bs_node(i_ts, i_node, :, :))*u_vect(2)*c_part(i_dir);
+        %     quiver3(pos_node(1), pos_node(2), pos_node(3), ...
+        %         u_vect_s(1), u_vect_s(2), u_vect_s(3),'k');
+        % end
     end
     
     hold off;
-    frames(i_ts) = getframe(fig);
-    writeVideo(v, frames(i_ts));
-end
-
-close(v);
+%     frames(i_ts) = getframe(fig);
+%     writeVideo(v, frames(i_ts));
+% end
+% 
+% close(v);
     
 
 %% Skew-symmetric operator

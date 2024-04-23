@@ -25,8 +25,14 @@ def case_data_extract(wing, case_data):
                 'n_elem_surf': wing.n_elem_surf,
                 'n_node_surf': wing.n_node_surf,
                 'n_node_tot': wing.n_node_tot,
-                'n_node_elem': wing.n_node_elem
-                }
+                'n_node_elem': wing.n_node_elem,
+                'case_name': wing.case_name,
+    }
+
+    if wing.node_h is None:
+        dict_out.update({'node_h': -1})
+    else:
+        dict_out.update({'node_h': wing.node_h})
     
     n_t_steps_save = 1
     if 'DynamicCoupled' in wing.flow:    n_t_steps_save = wing.n_tstep
@@ -35,20 +41,26 @@ def case_data_extract(wing, case_data):
     for i_ts in range(n_t_steps_save):
             beam_pos[i_ts, :, :] = case_data.structure.timestep_info[i_ts].pos
 
-    dict_out.update({'beam_pos': beam_pos})
+    beam_pos_init = case_data.structure.ini_info.pos
+    psi_init = case_data.structure.ini_info.psi
+
+    dict_out.update({'beam_pos': beam_pos, 'beam_pos_init': beam_pos_init, \
+                     'psi_init': psi_init})
 
     zeta = np.zeros([n_t_steps_save] + list(case_data.aero.timestep_info[0].zeta[0].shape))
     gamma = np.zeros([n_t_steps_save] + list(case_data.aero.timestep_info[0].gamma[0].shape))
     zeta_star = np.zeros([n_t_steps_save] + list(case_data.aero.timestep_info[0].zeta_star[0].shape))
     gamma_star = np.zeros([n_t_steps_save] + list(case_data.aero.timestep_info[0].gamma_star[0].shape))
+    psi = np.zeros([n_t_steps_save] + list(case_data.structure.timestep_info[0].psi.shape))
 
     for i_t in range(n_t_steps_save):
         zeta[i_t, :, :] = case_data.aero.timestep_info[i_t].zeta[0]
         gamma[i_t, :, :] = case_data.aero.timestep_info[i_t].gamma[0]
         zeta_star[i_t, :, :] = case_data.aero.timestep_info[i_t].zeta_star[0]
         gamma_star[i_t, :, :] = case_data.aero.timestep_info[i_t].gamma_star[0]
+        psi[i_t, :, :, :] = case_data.structure.timestep_info[i_t].psi
 
-    dict_out.update({'zeta': zeta, 'gamma': gamma, 'zeta_star': zeta_star, 'gamma_star': gamma_star})
+    dict_out.update({'zeta': zeta, 'gamma': gamma, 'zeta_star': zeta_star, 'gamma_star': gamma_star, 'psi': psi})
     
     if 'Modal' in wing.flow:
         mode_freqs = np.squeeze(pandas.read_csv('./output/%s/beam_modal_analysis/frequencies.dat' % wing.case_name, header=None))

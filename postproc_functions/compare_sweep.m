@@ -1,5 +1,5 @@
 close all;
-load("convergence_out.mat")
+% load("convergence_out.mat")
 
 t_aligned = aligned.dt:aligned.dt:aligned.dt*double(aligned.n_tstep);
 t_misaligned = misaligned.dt:misaligned.dt:misaligned.dt*double(misaligned.n_tstep);
@@ -87,12 +87,12 @@ figure();
 sgtitle("UVLM Induced Velocity");
 vel_dir = ['X', 'Y', 'Z'];
 % for i = 1:size(induced_v_pnts, 2)
-for i = 3
+for i = 2
     for j = 1:3
         subplot(1, 3, j);
         hold on;
-        plot(t_aligned, aligned.induced_v(:, i, j), "-b");
-        plot(t_misaligned, misaligned.induced_v(:, i, j), "-r");
+        plot(t_aligned, -aligned.induced_v(:, i, j), "-b");
+        plot(t_misaligned, -misaligned.induced_v(:, i, j), "-r");
 
         ylabel("Induced " + vel_dir(j) + " Velocity (m/s)");
         xlabel("Time (s)");
