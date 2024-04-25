@@ -268,7 +268,7 @@ class swept_tip_goland:
     ### Generate chord length and elastic axis position for every beam node
     def _generate_chord_main_ea(self):
 
-        self.panel_sweep_elem = self.sweep_panel*np.ones([self.n_elem_tot, 3])
+        self.panel_sweep_elem = self.sweep_panel*np.ones([self.n_elem_surf, 3])
         match self.disc_mode:
             case 0:
                 self.x_le = self.x-self.c_ref*self.main_ea
@@ -325,9 +325,6 @@ class swept_tip_goland:
                     self.panel_sweep_elem[i_elem, 0] = panel_sweep_nodal[i_elem*2]
                     self.panel_sweep_elem[i_elem, 1] = panel_sweep_nodal[i_elem*2+2]
                     self.panel_sweep_elem[i_elem, 2] = panel_sweep_nodal[i_elem*2+1]
-                    # self.panel_sweep_elem[i_elem, 0] = 0
-                    # self.panel_sweep_elem[i_elem, 1] = 0
-                    # self.panel_sweep_elem[i_elem, 2] = 0
                     self.chord[i_elem, 0] = self.chord_nodal[i_elem*2]
                     self.chord[i_elem, 1] = self.chord_nodal[i_elem*2+2]
                     self.chord[i_elem, 2] = self.chord_nodal[i_elem*2+1]
@@ -370,6 +367,9 @@ class swept_tip_goland:
 
             self.boundary_conditions = np.append(self.boundary_conditions,\
                                           np.flip(self.boundary_conditions[1:]))
+            
+            self.panel_sweep_elem = np.append(self.panel_sweep_elem,
+                                               -np.flip(self.panel_sweep_elem), axis=0)
     
     ### X position of nodes on leading or trailing edge with one kink
     def _edge_1_kink(self, y_kink, offset):
@@ -590,7 +590,7 @@ class swept_tip_goland:
 
         settings['AerogridLoader'] = {
             'unsteady': 'on',
-            'aligned_grid': 'off',
+            'aligned_grid': False,
             'mstar': int(self.Mstar_fact * self.M),
             'freestream_dir': self.panel_direction,
             'wake_shape_generator': 'StraightWake',
@@ -695,8 +695,10 @@ class swept_tip_goland:
                                 'continuous_eigenvalues': 'off',
                                 'dt': 0,
                                 'plot_eigenvalues': False,
-                                'max_rotation_deg': 15.,
-                                'max_displacement': 0.15,
+                                # 'max_rotation_deg': 15.,
+                                # 'max_displacement': 0.15,
+                                'max_rotation_deg': 0.0,
+                                'max_displacement': 0.0,
                                 'write_modes_vtk': True,
                                 'use_undamped_modes': True}
         

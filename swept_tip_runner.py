@@ -23,12 +23,12 @@ case_output = dict()
 
 flow =  ['BeamLoader', 
         'AerogridLoader',
-        'StaticCoupled',
+        # 'StaticCoupled',
         # 'Modal',
         'AerogridPlot',
         'BeamPlot',
-        # 'DynamicCoupled',
-        # 'AeroForcesCalculator',
+        'DynamicCoupled',
+        'AeroForcesCalculator',
         # 'LinearAssembler',
         # 'AsymptoticStability',
         ]
@@ -36,7 +36,6 @@ flow =  ['BeamLoader',
 # Case parameters
 ang_h_vect = list(np.deg2rad(np.linspace(-45, 45, 7)))
 pos_frac_h_vect = list(np.linspace(0.5, 0.95, 10))
-
 
 u_inf = 50
 c_ref = 1.8288
@@ -70,7 +69,7 @@ for i_ang, ang_h in enumerate(ang_h_vect):
                                         ang_h = ang_h,
                                         pos_frac_h = pos_frac_h,
                                         u_inf = u_inf,
-                                        n_surf = 1,
+                                        n_surf = 2,
                                         b_ref = c_ref*ar,
                                         gust_intensity = 0.5,
                                         gust_length = 0.2 * u_inf,

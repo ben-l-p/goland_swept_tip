@@ -2,14 +2,15 @@ close all;  clc;
 % load("case_data.mat");
 
 [n_ang, n_pos] = size(data);
+h_ang = zeros(n_ang, n_pos);
+pos_frac_h = zeros(n_pos, 1);
+ang_h = zeros(n_ang, 1);
 
-col = ['r-'; 'g-'; 'b-'; 'm-'; 'k-'];
-i_case = 1;
 
-figure();
-hold on;
-for i_ang = 6
-    for i_pos = 1:2:n_pos
+for i_ang = 1:n_ang
+    for i_pos = 1:n_pos
+        pos_frac_h(i_pos) = data{i_ang, i_pos}.pos_frac_h;
+        ang_h(i_ang) = data{i_ang, i_pos}.ang_h;
 
         psi_j_elem = data{i_ang, i_pos}.psi_init;
         psi_t_elem = squeeze(data{i_ang, i_pos}.psi);
@@ -65,26 +66,33 @@ for i_ang = 6
             else
                 eta(i_elem) = eta(i_elem-1)+spc;
             end
-
         end
         
-        node_h_elem = node_h*3/2;
         if node_h == -1
-            plot(eta, -theta_t, col(i_case));
+            node_h_elem = n_elem_tot*3;
         else
-            plot(eta(1:node_h_elem), -theta_t(1:node_h_elem), col(i_case));
-            plot(eta(node_h_elem+1:end), -theta_t(node_h_elem+1:end), col(i_case));
-            xline(eta(node_h_elem), 'k--');
+            node_h_elem = node_h*3/2-2;
         end
-
-        i_case = i_case + 1;
+        h_ang(i_ang, i_pos) = -theta_t(node_h_elem);
     end
 end
 
-xlabel("Beam Curvilinear Coordinate \eta");
+figure();
+hold on;
+for i_ang = 2:n_ang-1
+    plot(pos_frac_h, h_ang(i_ang, :));
+end
+xlim([0.5 0.95]);
+title("Wing Twist at Hinge")
+xlabel("Hinge Semispan Position \eta_h");
 ylabel("Twist Angle (deg)");
-title("Wing Trim Twist (Swept Back 30 deg)");
-xlim([0, 1]);
+[leg,att] = legend(["-30 deg", "-15 deg", "0 deg", "15 deg", "30 deg"]);
+
+title(leg,'Tip Sweep')
+leg.Title.Visible = 'on';
+leg.Title.NodeChildren.Position = [0.5 1.15 0];
+
+
 hold off;
 
 %% Functions

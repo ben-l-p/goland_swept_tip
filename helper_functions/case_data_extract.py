@@ -8,7 +8,6 @@ def case_data_extract(wing, case_data):
                 'pos_frac_h': wing.pos_frac_h,
                 'dt': wing.dt, 
                 'u_inf': wing.u_inf, 
-                'n_tstep': wing.n_tstep, 
                 'M': wing.M,
                 'N': wing.N, 
                 'c_ref': wing.c_ref,
@@ -34,26 +33,25 @@ def case_data_extract(wing, case_data):
     else:
         dict_out.update({'node_h': wing.node_h})
     
-    n_t_steps_save = 1
-    if 'DynamicCoupled' in wing.flow:    n_t_steps_save = wing.n_tstep
+    n_tstep = len(case_data.structure.timestep_info)
 
-    beam_pos = np.zeros([n_t_steps_save, wing.n_node_tot, 3])
-    for i_ts in range(n_t_steps_save):
+    beam_pos = np.zeros([n_tstep, wing.n_node_tot, 3])
+    for i_ts in range(n_tstep):
             beam_pos[i_ts, :, :] = case_data.structure.timestep_info[i_ts].pos
 
     beam_pos_init = case_data.structure.ini_info.pos
     psi_init = case_data.structure.ini_info.psi
 
     dict_out.update({'beam_pos': beam_pos, 'beam_pos_init': beam_pos_init, \
-                     'psi_init': psi_init})
+                     'psi_init': psi_init, 'n_tstep':n_tstep})
 
-    zeta = np.zeros([n_t_steps_save] + list(case_data.aero.timestep_info[0].zeta[0].shape))
-    gamma = np.zeros([n_t_steps_save] + list(case_data.aero.timestep_info[0].gamma[0].shape))
-    zeta_star = np.zeros([n_t_steps_save] + list(case_data.aero.timestep_info[0].zeta_star[0].shape))
-    gamma_star = np.zeros([n_t_steps_save] + list(case_data.aero.timestep_info[0].gamma_star[0].shape))
-    psi = np.zeros([n_t_steps_save] + list(case_data.structure.timestep_info[0].psi.shape))
+    zeta = np.zeros([n_tstep] + list(case_data.aero.timestep_info[0].zeta[0].shape))
+    gamma = np.zeros([n_tstep] + list(case_data.aero.timestep_info[0].gamma[0].shape))
+    zeta_star = np.zeros([n_tstep] + list(case_data.aero.timestep_info[0].zeta_star[0].shape))
+    gamma_star = np.zeros([n_tstep] + list(case_data.aero.timestep_info[0].gamma_star[0].shape))
+    psi = np.zeros([n_tstep] + list(case_data.structure.timestep_info[0].psi.shape))
 
-    for i_t in range(n_t_steps_save):
+    for i_t in range(n_tstep):
         zeta[i_t, :, :] = case_data.aero.timestep_info[i_t].zeta[0]
         gamma[i_t, :, :] = case_data.aero.timestep_info[i_t].gamma[0]
         zeta_star[i_t, :, :] = case_data.aero.timestep_info[i_t].zeta_star[0]
@@ -71,16 +69,16 @@ def case_data_extract(wing, case_data):
         force_data = pandas.read_csv('./output/%s/forces/forces_aeroforces.txt' % wing.case_name, delimiter=', ', index_col=False).to_dict()
         moment_data = pandas.read_csv('./output/%s/forces/moments_aeroforces.txt' % wing.case_name, delimiter=', ', index_col=False).to_dict()
 
-        forces_a_s = np.zeros([n_t_steps_save, 3])
-        forces_g_s = np.zeros([n_t_steps_save, 3])
-        moments_a_s = np.zeros([n_t_steps_save, 3])
-        moments_g_s = np.zeros([n_t_steps_save, 3])
-        forces_a_u = np.zeros([n_t_steps_save, 2])
-        forces_g_u = np.zeros([n_t_steps_save, 3])
-        moments_a_u = np.zeros([n_t_steps_save, 3])
-        moments_g_u = np.zeros([n_t_steps_save, 3])
+        forces_a_s = np.zeros([n_tstep, 3])
+        forces_g_s = np.zeros([n_tstep, 3])
+        moments_a_s = np.zeros([n_tstep, 3])
+        moments_g_s = np.zeros([n_tstep, 3])
+        forces_a_u = np.zeros([n_tstep, 2])
+        forces_g_u = np.zeros([n_tstep, 3])
+        moments_a_u = np.zeros([n_tstep, 3])
+        moments_g_u = np.zeros([n_tstep, 3])
 
-        for i_ts in range(n_t_steps_save):
+        for i_ts in range(n_tstep):
             forces_a_s[i_ts, :] = [force_data['fx_steady_a'][i_ts], force_data['fy_steady_a'][i_ts], force_data['fz_steady_a'][i_ts]]
             forces_g_s[i_ts, :] = [force_data['fx_steady_G'][i_ts], force_data['fy_steady_G'][i_ts], force_data['fz_steady_G'][i_ts]]
             moments_a_s[i_ts, :] = [moment_data['mx_steady_a'][i_ts], moment_data['my_steady_a'][i_ts], moment_data['mz_steady_a'][i_ts]]
